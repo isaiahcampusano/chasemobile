@@ -68,7 +68,6 @@
 .simple-home-content { display: grid; gap: 14px; }
 
 .simple-mode-banner { min-height: 82px; margin-bottom: 14px; padding: 13px 14px; border: 1px solid #cbdcec; border-radius: 8px; background: #fff; display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 12px; box-shadow: 0 1px 2px rgba(10, 41, 67, .08); }
-.simple-mode-banner.compact { margin: 0 0 18px; }
 .simple-mode-banner > span { width: 38px; height: 38px; border-radius: 50%; background: var(--simple-blue-soft); display: grid; place-items: center; color: var(--simple-blue); }
 .simple-mode-banner .icon { width: 22px; height: 22px; }
 .simple-mode-banner strong { display: block; margin-bottom: 3px; font-size: 15px; }
@@ -96,7 +95,7 @@
 .simple-pill-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--simple-blue-soft); display: grid; place-items: center; }
 .simple-pill-icon .icon { width: 22px; height: 22px; }
 
-.simple-safety-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.simple-safety-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .simple-safety-grid article { min-height: 76px; padding: 14px; border: 1px solid var(--simple-line); border-radius: 14px; background: #fff; display: flex; flex-direction: column; justify-content: center; gap: 6px; box-shadow: 0 1px 2px rgba(10, 41, 67, .04); }
 .simple-safety-grid strong { font-size: 15px; line-height: 1.2; }
 .simple-safety-grid span { color: var(--simple-green); font-size: 13px; font-weight: 700; line-height: 1.35; }
@@ -167,6 +166,18 @@
 .simple-settings-list .sign-out-row { color: #9d382d; }
 .simple-settings-list .sign-out-row .icon { color: #9d382d; }
 .settings-note { margin: 22px 10px 0; color: var(--simple-muted); font-size: 12px; line-height: 1.55; text-align: center; }
+
+.detail-stack { display: grid; gap: 16px; }
+.detail-stack .simple-controls-card,
+.detail-stack .simple-settings-list { margin-top: 0; }
+.detail-hero,
+.detail-card { padding: 18px; border: 1px solid var(--simple-line); border-radius: 16px; background: #fff; box-shadow: 0 2px 10px rgba(10, 41, 67, .04); }
+.detail-kicker { margin: 0 0 6px; color: var(--simple-blue); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.detail-hero h2 { margin: 0 0 8px; font-size: 24px; letter-spacing: -.03em; }
+.detail-hero p:last-child,
+.detail-card p { margin: 0; color: var(--simple-muted); font-size: 13px; line-height: 1.5; }
+.detail-card strong { display: block; margin-bottom: 6px; font-size: 16px; }
+.detail-action-list button > span { font-size: 14px; font-weight: 600; }
 
 .flow-screen { height: 100%; display: flex; flex-direction: column; }
 .flow-header { flex: 0 0 112px; border-bottom: 1px solid var(--simple-line); background: #fff; }

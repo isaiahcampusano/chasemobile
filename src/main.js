@@ -358,7 +358,7 @@ function setMode(nextMode) {
   renderMode();
 }
 
-function resetSession() {
+function resetSession(message = `${currentMode === 'current' ? 'Current' : 'Simple'} session reset.`) {
   demoData = createDemoData();
   const state = activeState();
   state.activeTab = currentMode === 'current' ? 'accounts' : 'home';
@@ -366,17 +366,79 @@ function resetSession() {
   state.flowStack = [];
   if (currentMode === 'current') state.chartTab = 'spending';
   renderMode();
-  showToast(`${currentMode === 'current' ? 'Current' : 'Simple'} session reset.`);
+  showToast(message);
+}
+
+function openSimpleRoute(route, { replace = true } = {}) {
+  if (currentMode !== 'simple') return;
+  saveActiveScroll();
+  if (replace) {
+    modeStates.simple.flowStack = [route];
+  } else {
+    modeStates.simple.flowStack.push(route);
+  }
+  renderMode();
+}
+
+function openSimpleTab(nextTab) {
+  if (currentMode !== 'simple') return;
+  modeStates.simple.activeTab = nextTab;
+  modeStates.simple.scrollPositions[nextTab] = 0;
+  modeStates.simple.flowStack = [];
+  renderMode();
 }
 
 function openFlow(button) {
   if (currentMode !== 'simple') return;
-  saveActiveScroll();
   const route = button.dataset.transactionId
     ? { type: 'transaction', step: 'detail', transactionId: button.dataset.transactionId }
     : { type: button.dataset.flow, step: 'form', presetId: button.dataset.recipient || button.dataset.bill || '' };
-  modeStates.simple.flowStack = [route];
-  renderMode();
+  const replace = !button.dataset.transactionId || modeStates.simple.flowStack.at(-1)?.type !== 'activity';
+  openSimpleRoute(route, { replace });
+}
+
+function openSettingsSection(button) {
+  const sectionIndex = Number(button.dataset.settingsSection);
+  openSimpleRoute({ type: 'settings', sectionIndex: Number.isNaN(sectionIndex) ? 0 : sectionIndex });
+}
+
+function handleSimpleAction(button) {
+  if (currentMode !== 'simple') return false;
+  const action = button.dataset.action;
+  if (!action) return false;
+  if (action === 'view-profile') {
+    openSimpleRoute({ type: 'profile' });
+    return true;
+  }
+  if (action === 'get-help') {
+    openSimpleRoute({ type: 'help' });
+    return true;
+  }
+  if (action === 'view-all-transactions') {
+    const replace = modeStates.simple.flowStack.length === 0;
+    if (!replace && modeStates.simple.flowStack.at(-1)?.type === 'activity') return true;
+    openSimpleRoute({ type: 'activity' }, { replace });
+    return true;
+  }
+  if (action === 'open-settings-tab') {
+    openSimpleTab('settings');
+    return true;
+  }
+  if (action === 'share-with-helper' || action === 'trusted-helper-review') {
+    showToast('A trusted helper review would start here in the full app.');
+    return true;
+  }
+  if (action === 'contact-support') {
+    showToast('Chase support would open here in the full app.');
+    return true;
+  }
+  if (action === 'sign-out') {
+    if (window.confirm('Are you sure you want to sign out?')) {
+      resetSession('Signed out of the demo.');
+    }
+    return true;
+  }
+  return false;
 }
 
 function flowBack() {
@@ -434,11 +496,13 @@ app.addEventListener('click', (event) => {
   if (button.dataset.mode) return setMode(button.dataset.mode);
   if (button.hasAttribute('data-reset-session')) return resetSession();
   if (button.dataset.tab) return switchTab(button.dataset.tab);
+  if (button.dataset.settingsSection) return openSettingsSection(button);
   if (button.dataset.flow || button.dataset.transactionId) return openFlow(button);
   if (button.hasAttribute('data-flow-back')) return flowBack();
   if (button.hasAttribute('data-continue-flow')) return continueFlow(button);
   if (button.hasAttribute('data-confirm-flow')) return confirmFlow();
   if (button.hasAttribute('data-flow-done')) return finishFlow();
+  if (button.dataset.action && handleSimpleAction(button)) return;
   if (button.dataset.chartTab) {
     const card = button.closest('.chart-card');
     card.querySelectorAll('[data-chart-tab]').forEach((tab) => tab.setAttribute('aria-selected', String(tab === button)));
