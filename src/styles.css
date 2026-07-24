@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  font-family: 'Libre Franklin', 'Trebuchet MS', sans-serif;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
   color: #111820;
   background: #dfe8ef;
   font-synthesis: none;
-  --blue: #0060b9;
-  --blue-deep: #073f7d;
-  --blue-bright: #006bc7;
+  --blue: #117aca;
+  --blue-deep: #004b87;
+  --blue-bright: #0060b9;
   --blue-soft: #eaf4fd;
   --green: #064c45;
   --green-bright: #2b7605;
@@ -56,7 +56,7 @@ button { color: inherit; }
 .signal { height: 15px; display: flex; align-items: flex-end; gap: 2px; }
 .signal i { display: block; width: 3px; border-radius: 2px; background: currentColor; }
 .signal i:nth-child(1) { height: 5px; }.signal i:nth-child(2) { height: 8px; }.signal i:nth-child(3) { height: 11px; }.signal i:nth-child(4) { height: 14px; opacity: .4; }
-.wifi { font-size: 23px; line-height: 15px; transform: rotate(-45deg); }
+.wifi { font-size: 10px; line-height: 15px; letter-spacing: 0; }
 .battery { min-width: 29px; height: 16px; padding: 1px 4px; border-radius: 4px; color: #123645; background: currentColor; position: relative; font-size: 11px; line-height: 14px; text-align: center; }
 .battery::before { content: ''; position: absolute; inset: 2px; border-radius: 2px; background: #fff; z-index: -1; }
 .battery::after { content: ''; position: absolute; right: -3px; top: 5px; width: 2px; height: 6px; border-radius: 0 2px 2px 0; background: currentColor; }

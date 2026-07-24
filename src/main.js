@@ -7,7 +7,7 @@ import { simpleNavItems, simpleScreens, simpleFlowScreen } from './simple-mode.j
 function statusBar(theme = 'dark') {
   return `<div class="status-bar status-${theme}" aria-hidden="true">
     <span class="status-time">9:41</span>
-    <div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi">◒</span><span class="battery">84</span></div>
+    <div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi">Wi-Fi</span><span class="battery">84</span></div>
   </div>`;
 }
 

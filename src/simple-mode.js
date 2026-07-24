@@ -10,7 +10,7 @@ export const simpleNavItems = [
 function statusBar() {
   return `<div class="status-bar status-dark" aria-hidden="true">
     <span class="status-time">9:41</span>
-    <div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi">◒</span><span class="battery">84</span></div>
+    <div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi">Wi-Fi</span><span class="battery">84</span></div>
   </div>`;
 }
 
@@ -18,43 +18,57 @@ function simpleHeader(title, subtitle = '') {
   return `<header class="simple-header sticky-header">
     ${statusBar()}
     <div class="simple-title-row">
-      <div><span>${subtitle}</span><h1>${title}</h1></div>
+      <div class="simple-brand-lockup"><span class="chase-mark" aria-hidden="true"></span><b>CHASE</b></div>
+      <div class="simple-title-copy"><span>${subtitle}</span><h1>${title}</h1></div>
       <button class="simple-avatar demo-action" type="button" aria-label="Profile">${icon('user')}</button>
     </div>
   </header>`;
 }
 
+function modeBanner(compact = false) {
+  return `<section class="simple-mode-banner ${compact ? 'compact' : ''}" aria-label="Simple Mode">
+    <span>${icon('shield')}</span>
+    <div><strong>${compact ? 'Review step added' : 'Simple mode'}</strong><p>${compact ? 'New payees and larger amounts pause for one more check before money moves.' : 'Payments use bigger buttons, clearer labels, and an extra review before money moves.'}</p></div>
+  </section>`;
+}
+
 function homeScreen(data) {
   const total = data.accounts.reduce((sum, account) => sum + account.balance, 0);
+  const upcomingBills = `${data.bills.length} due by ${data.bills[data.bills.length - 1]?.due}`;
   return `<section class="screen simple-screen simple-home" data-screen="home" aria-labelledby="simple-home-title">
-    ${simpleHeader('Your money', 'Good morning')}
+    ${simpleHeader('Accounts', 'Simple mode')}
     <div class="screen-scroll" tabindex="0">
-      <div class="simple-content">
-        <section class="simple-balance-hero" aria-labelledby="simple-home-title">
-          <span>Total available</span>
-          <h2 id="simple-home-title">${formatCurrency(total)}</h2>
-          <p>Across checking and savings</p>
-        </section>
+      <div class="simple-content simple-home-content">
+        <section class="simple-overview-card" aria-labelledby="simple-home-title">
+          <div class="simple-balance-hero">
+            <span>Total available</span>
+            <h2 id="simple-home-title">${formatCurrency(total)}</h2>
+            <p>Across checking and savings</p>
+          </div>
 
-        <div class="simple-account-list" aria-label="Accounts">
-          ${data.accounts.map((account) => `<article class="simple-account-row">
-            <span class="simple-account-icon">${icon(account.id === 'checking' ? 'wallet' : 'pig')}</span>
-            <span><strong>${account.name}</strong><small>•••• ${account.lastFour}</small></span>
-            <b>${formatCurrency(account.balance)}</b>
-          </article>`).join('')}
-        </div>
-
-        <section class="simple-section" aria-labelledby="simple-actions-title">
-          <h2 id="simple-actions-title">What would you like to do?</h2>
-          <div class="simple-primary-actions">
-            <button type="button" data-flow="send">${icon('cash')}<span>Send money</span></button>
-            <button type="button" data-flow="bill">${icon('receipt')}<span>Pay a bill</span></button>
-            <button type="button" data-flow="transfer">${icon('transfer')}<span>Transfer</span></button>
+          <div class="simple-account-list" aria-label="Bank accounts">
+            <div class="simple-account-list-header">Bank accounts (${data.accounts.length})</div>
+            ${data.accounts.map((account) => `<article class="simple-account-row">
+              <span class="simple-account-icon">${icon(account.id === 'checking' ? 'wallet' : 'pig')}</span>
+              <span><strong>${account.name}</strong><small>Account ending in ${account.lastFour}</small></span>
+              <b>${formatCurrency(account.balance)}</b>
+            </article>`).join('')}
           </div>
         </section>
 
+        <div class="simple-quick-actions" aria-label="Quick actions">
+          <button class="simple-quick-pill" type="button" data-flow="send"><span class="simple-pill-icon">${icon('cash')}</span><span>Send money</span></button>
+          <button class="simple-quick-pill" type="button" data-flow="bill"><span class="simple-pill-icon">${icon('receipt')}</span><span>Pay a bill</span></button>
+          <button class="simple-quick-pill" type="button" data-flow="transfer"><span class="simple-pill-icon">${icon('transfer')}</span><span>Transfer</span></button>
+        </div>
+
+        <section class="simple-safety-grid" aria-label="Helpful reminders">
+          <article><strong>Upcoming bills</strong><span>${upcomingBills}</span></article>
+          <article><strong>Family alerts</strong><span>On for new payees</span></article>
+        </section>
+
         <section class="simple-section recent-section" aria-labelledby="recent-title">
-          <div class="simple-section-heading"><h2 id="recent-title">Recent activity</h2><button type="button" data-tab="pay">See all</button></div>
+          <div class="simple-section-heading"><h2 id="recent-title">Recent activity</h2><button class="demo-action" type="button">See all</button></div>
           <div class="transaction-list">
             ${data.transactions.slice(0, 4).map((transaction) => `<button class="transaction-row" type="button" data-transaction-id="${transaction.id}">
               <span class="transaction-mark">${transaction.merchant.slice(0, 1)}</span>
@@ -64,6 +78,12 @@ function homeScreen(data) {
             </button>`).join('')}
           </div>
         </section>
+
+        <section class="simple-section simple-help-panel" aria-labelledby="help-title">
+          <span>${icon('chat')}</span>
+          <div><h2 id="help-title">Questions about a charge?</h2><p>Get a plain-language explanation or share it with a trusted helper before you act.</p></div>
+          <button class="demo-action" type="button">Get help</button>
+        </section>
       </div>
     </div>
   </section>`;
@@ -71,14 +91,15 @@ function homeScreen(data) {
 
 function payScreen(data) {
   return `<section class="screen simple-screen simple-pay" data-screen="pay" aria-labelledby="simple-pay-title">
-    ${simpleHeader('Pay & transfer')}
+    ${simpleHeader('Pay & transfer', 'Simple mode')}
     <div class="screen-scroll" tabindex="0">
       <div class="simple-content">
-        <h2 class="simple-page-title" id="simple-pay-title">Move money</h2>
+        <h2 class="simple-page-title" id="simple-pay-title">Choose a task</h2>
+        ${modeBanner(true)}
         <div class="simple-task-stack">
-          <button type="button" data-flow="send">${icon('cash')}<span><strong>Send money</strong><small>Pay someone you know</small></span>${icon('chevron')}</button>
-          <button type="button" data-flow="bill">${icon('receipt')}<span><strong>Pay a bill</strong><small>Review upcoming bills</small></span>${icon('chevron')}</button>
-          <button type="button" data-flow="transfer">${icon('transfer')}<span><strong>Transfer between accounts</strong><small>Move your own money</small></span>${icon('chevron')}</button>
+          <button type="button" data-flow="send">${icon('cash')}<span><strong>Send money</strong><small>To people you know</small></span>${icon('chevron')}</button>
+          <button type="button" data-flow="bill">${icon('receipt')}<span><strong>Pay a bill</strong><small>Review what is due</small></span>${icon('chevron')}</button>
+          <button type="button" data-flow="transfer">${icon('transfer')}<span><strong>Transfer</strong><small>Between your accounts</small></span>${icon('chevron')}</button>
         </div>
 
         <section class="simple-section compact-section" aria-labelledby="recipients-title">
@@ -101,22 +122,28 @@ function payScreen(data) {
 
 function settingsScreen() {
   const settings = [
-    ['user', 'Account management'],
+    ['shield', 'Simple Mode controls'],
     ['bell', 'Notifications'],
+    ['user', 'Trusted helper'],
     ['shield', 'Card controls'],
     ['document', 'Statements & documents']
   ];
   return `<section class="screen simple-screen simple-settings" data-screen="settings" aria-labelledby="simple-settings-title">
-    ${simpleHeader('Settings')}
+    ${simpleHeader('Settings', 'Simple mode')}
     <div class="screen-scroll" tabindex="0">
       <div class="simple-content">
-        <h2 class="simple-page-title" id="simple-settings-title">Manage your experience</h2>
+        <h2 class="simple-page-title" id="simple-settings-title">Simple Mode settings</h2>
         <div class="settings-profile"><span class="simple-avatar large">${icon('user')}</span><span><strong>Demo customer</strong><small>Fictional profile</small></span></div>
+        <div class="simple-controls-card">
+          <div><strong>Large text and buttons</strong><span>On</span></div>
+          <div><strong>Plain-language reviews</strong><span>On</span></div>
+          <div><strong>Trusted helper alerts</strong><span>On</span></div>
+        </div>
         <div class="simple-settings-list">
           ${settings.map(([iconName, label]) => `<button class="demo-action" type="button">${icon(iconName)}<span>${label}</span>${icon('chevron')}</button>`).join('')}
           <button class="demo-action sign-out-row" type="button">${icon('logout')}<span>Sign out</span>${icon('chevron')}</button>
         </div>
-        <p class="settings-note">Current and Simple modes are selected from the prototype controls outside this simulated banking interface.</p>
+        <p class="settings-note">Prototype only. Simple Mode settings show how Chase could support seniors, kids, and caregivers without changing the underlying account.</p>
       </div>
     </div>
   </section>`;
@@ -150,7 +177,7 @@ function sendForm(data, presetId, draft = {}) {
 
 function billForm(data, presetId, draft = {}) {
   return `<form class="flow-form" data-flow-form="bill">
-    <fieldset><legend>Choose a bill</legend>${radioCards('billId', data.bills, draft.billId || presetId, (bill) => `<strong>${bill.payee}</strong><small>Due ${bill.due} · ${formatCurrency(bill.amount)}</small>`)}</fieldset>
+    <fieldset><legend>Choose a bill</legend>${radioCards('billId', data.bills, draft.billId || presetId, (bill) => `<strong>${bill.payee}</strong><small>Due ${bill.due} &middot; ${formatCurrency(bill.amount)}</small>`)}</fieldset>
     <label class="amount-field"><span>Payment amount</span><span><b>$</b><input name="amount" type="number" inputmode="decimal" min="0.01" max="5000" step="0.01" placeholder="0.00" value="${draft.amount || ''}" required></span></label>
     <button class="simple-continue" type="button" data-continue-flow>Review payment</button>
   </form>`;
@@ -158,8 +185,8 @@ function billForm(data, presetId, draft = {}) {
 
 function transferForm(data, draft = {}) {
   return `<form class="flow-form" data-flow-form="transfer">
-    <label class="select-field"><span>From</span><select name="fromAccount" required>${data.accounts.map((account) => `<option value="${account.id}" ${draft.fromAccount === account.id ? 'selected' : ''}>${account.name} · ${formatCurrency(account.balance)}</option>`).join('')}</select></label>
-    <label class="select-field"><span>To</span><select name="toAccount" required>${[...data.accounts].reverse().map((account) => `<option value="${account.id}" ${draft.toAccount === account.id ? 'selected' : ''}>${account.name} · ${formatCurrency(account.balance)}</option>`).join('')}</select></label>
+    <label class="select-field"><span>From</span><select name="fromAccount" required>${data.accounts.map((account) => `<option value="${account.id}" ${draft.fromAccount === account.id ? 'selected' : ''}>${account.name} &middot; ${formatCurrency(account.balance)}</option>`).join('')}</select></label>
+    <label class="select-field"><span>To</span><select name="toAccount" required>${[...data.accounts].reverse().map((account) => `<option value="${account.id}" ${draft.toAccount === account.id ? 'selected' : ''}>${account.name} &middot; ${formatCurrency(account.balance)}</option>`).join('')}</select></label>
     <label class="amount-field"><span>Amount</span><span><b>$</b><input name="amount" type="number" inputmode="decimal" min="0.01" max="5000" step="0.01" placeholder="0.00" value="${draft.amount || ''}" required></span></label>
     <button class="simple-continue" type="button" data-continue-flow>Review transfer</button>
   </form>`;
@@ -179,7 +206,7 @@ function flowReview(route, data) {
     const to = data.accounts.find((item) => item.id === route.payload.toAccount);
     rows = [['From', from?.name], ['To', to?.name], ['Amount', amount]];
   }
-  return `<div class="flow-review"><div class="review-amount"><span>Review amount</span><strong>${amount}</strong></div><dl>${rows.map(([term, value]) => `<div><dt>${term}</dt><dd>${value}</dd></div>`).join('')}</dl><div class="demo-warning">This is a usability-test preview. Confirming will not move money.</div><button class="simple-continue" type="button" data-confirm-flow>Confirm demo</button></div>`;
+  return `<div class="flow-review"><div class="review-amount"><span>Review amount</span><strong>${amount}</strong></div><dl>${rows.map(([term, value]) => `<div><dt>${term}</dt><dd>${value}</dd></div>`).join('')}</dl><div class="demo-warning"><strong>Simple Mode check</strong><span>We show the recipient, account, and amount one more time. For a new person or unusual amount, Chase could ask a trusted helper to review.</span></div><button class="simple-continue" type="button" data-confirm-flow>Confirm demo</button><button class="simple-secondary demo-action" type="button">Ask trusted helper</button></div>`;
 }
 
 function flowComplete(route) {
@@ -191,7 +218,7 @@ function transactionDetail(route, data) {
   const transaction = data.transactions.find((item) => item.id === route.transactionId);
   const account = data.accounts.find((item) => item.id === transaction?.accountId);
   if (!transaction) return '<p class="empty-state">Transaction not found.</p>';
-  return `<div class="transaction-detail"><span class="transaction-mark large">${transaction.merchant.slice(0, 1)}</span><h2>${transaction.merchant}</h2><strong class="detail-amount ${transaction.amount > 0 ? 'positive' : ''}">${formatCurrency(transaction.amount)}</strong><dl><div><dt>Date</dt><dd>${transaction.date}</dd></div><div><dt>Account</dt><dd>${account?.name} · ${account?.lastFour}</dd></div><div><dt>Status</dt><dd>Completed</dd></div></dl><button class="simple-secondary" type="button" data-flow-back>Back to activity</button></div>`;
+  return `<div class="transaction-detail"><span class="transaction-mark large">${transaction.merchant.slice(0, 1)}</span><h2>${transaction.merchant}</h2><strong class="detail-amount ${transaction.amount > 0 ? 'positive' : ''}">${formatCurrency(transaction.amount)}</strong><dl><div><dt>Date</dt><dd>${transaction.date}</dd></div><div><dt>Account</dt><dd>${account?.name} &middot; ${account?.lastFour}</dd></div><div><dt>Status</dt><dd>Completed</dd></div></dl><button class="simple-secondary" type="button" data-flow-back>Back to activity</button></div>`;
 }
 
 export function simpleFlowScreen(route, data) {
