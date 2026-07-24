@@ -34,7 +34,7 @@ function accountScreen() {
       <div class="account-content">
         <div class="quick-actions horizontal-scroll" aria-label="Quick actions">
           <button class="quick-pill demo-action plus-pill" type="button" aria-label="More actions">${icon('plus')}</button>
-          <button class="quick-pill demo-action" type="button">Send | Zelle®</button>
+          <button class="quick-pill demo-action" type="button">Send | Zelle&reg;</button>
           <button class="quick-pill demo-action" type="button">Deposit checks</button>
           <button class="quick-pill demo-action" type="button">Pay bills</button>
         </div>
@@ -56,7 +56,7 @@ function accountScreen() {
         <section class="content-section">
           <h2>Explore more products</h2>
           <div class="product-strip horizontal-scroll">
-            ${[['pig','Savings & CDs'],['card','Checking'],['wallet','Credit cards'],['chart','Invest on your own'],['car','Auto']].map(([i,l]) => `<button class="product-tile demo-action" type="button">${icon(i)}<span>${l}</span></button>`).join('')}
+            ${[['pig', 'Savings & CDs'], ['card', 'Checking'], ['wallet', 'Credit cards'], ['chart', 'Invest on your own'], ['car', 'Auto']].map(([i, l]) => `<button class="product-tile demo-action" type="button">${icon(i)}<span>${l}</span></button>`).join('')}
           </div>
           <div class="align-right"><button class="soft-button demo-action" type="button">Explore products</button></div>
         </section>
@@ -73,7 +73,7 @@ function accountScreen() {
             <button class="soft-button demo-action" type="button">Go to Autosave</button>
           </article>
           <article class="credit-card-panel">
-            <div><h3>See your free credit score</h3><p>Get credit and identity monitoring with Credit Journey®.</p></div>
+            <div><h3>See your free credit score</h3><p>Get credit and identity monitoring with Credit Journey&reg;.</p></div>
             <span class="gauge-art">${icon('gauge')}</span>
             <button class="soft-button demo-action" type="button">Get free score</button>
           </article>
@@ -113,14 +113,14 @@ function accountScreen() {
 
 function transferScreen() {
   const actions = [
-    ['card','Pay bills'], ['cash','Send money'], ['bank','Wires & global transfers'],
-    ['transfer','Transfer'], ['receipt','Request or split'], ['check','Deposit checks']
+    ['card', 'Pay bills'], ['cash', 'Send money'], ['bank', 'Wires & global transfers'],
+    ['transfer', 'Transfer'], ['receipt', 'Request or split'], ['check', 'Deposit checks']
   ];
   return `<section class="screen transfer-screen" data-screen="transfer" aria-labelledby="transfer-title">
     <header class="blue-header sticky-header">${statusBar('light')}<h1 id="transfer-title">Pay &amp; Transfer</h1></header>
     <div class="screen-scroll" tabindex="0">
       <div class="transfer-content">
-        <div class="transfer-grid">${actions.map(([i,l]) => actionButton(l, i)).join('')}</div>
+        <div class="transfer-grid">${actions.map(([i, l]) => actionButton(l, i)).join('')}</div>
         <div class="menu-list">
           ${chevronRow('See activity', 'cash')}
           ${chevronRow('Manage recipients', 'users')}
@@ -187,7 +187,7 @@ function planScreen() {
 
         <section class="stand-section content-section">
           <h2>See where you stand</h2>
-          <article class="credit-card-panel white-panel"><div><h3>See your free credit score</h3><p>Get credit and identity monitoring with Credit Journey®.</p></div><span class="gauge-art colorful">${icon('gauge')}</span><button class="soft-button demo-action" type="button">Get free score</button></article>
+          <article class="credit-card-panel white-panel"><div><h3>See your free credit score</h3><p>Get credit and identity monitoring with Credit Journey&reg;.</p></div><span class="gauge-art colorful">${icon('gauge')}</span><button class="soft-button demo-action" type="button">Get free score</button></article>
           <button class="text-link demo-action" type="button">What do you think about Wealth Plan? ${icon('chevron')}</button>
         </section>
         <section class="disclosure-section plan-disclosure">
@@ -202,14 +202,14 @@ function planScreen() {
 }
 
 function moreScreen() {
-  const products = [['card','Credit card'],['wallet','Checking account'],['pig','Savings/CD account'],['briefcase','Business account'],['home','Mortgage & Equity'],['car','Auto'],['dots','All products'],['receipt','Application status']];
-  const support = [['atm','Find ATM & branch'],['calendar','Schedule a meeting'],['chat','Contact us']];
+  const products = [['card', 'Credit card'], ['wallet', 'Checking account'], ['pig', 'Savings/CD account'], ['briefcase', 'Business account'], ['home', 'Mortgage & Equity'], ['car', 'Auto'], ['dots', 'All products'], ['receipt', 'Application status']];
+  const support = [['atm', 'Find ATM & branch'], ['calendar', 'Schedule a meeting'], ['chat', 'Contact us']];
   return `<section class="screen more-screen" data-screen="more" aria-labelledby="more-title">
     <header class="more-header sticky-header">${statusBar('light')}<div><span aria-hidden="true"></span><h1 id="more-title">More</h1><button class="header-link demo-action" type="button">Sign out</button></div></header>
     <div class="screen-scroll" tabindex="0">
       <div class="more-content">
-        <section class="more-section"><h2>Open an account</h2><div class="more-grid">${products.map(([i,l]) => actionButton(l,i)).join('')}</div></section>
-        <section class="more-section support-section"><h2>Support</h2><div class="more-grid support-grid">${support.map(([i,l]) => actionButton(l,i)).join('')}</div></section>
+        <section class="more-section"><h2>Open an account</h2><div class="more-grid">${products.map(([i, l]) => actionButton(l, i)).join('')}</div></section>
+        <section class="more-section support-section"><h2>Support</h2><div class="more-grid support-grid">${support.map(([i, l]) => actionButton(l, i)).join('')}</div></section>
         <section class="feedback-section"><h2>How do you like the new experience?</h2><button class="feedback-button demo-action" type="button">Share your feedback</button></section>
         <div class="prototype-note"><strong>Unofficial prototype</strong><span>No accounts can be opened and no personal information is collected.</span></div>
       </div>
@@ -244,23 +244,74 @@ const modeStates = {
   }
 };
 
-app.innerHTML = `${sprite()}<div class="prototype-layout">
-  <aside class="prototype-toolbar" aria-label="Prototype controls">
-    <div class="prototype-identity"><strong>Usability prototype</strong><span>Unofficial · fictional data only</span></div>
-    <div class="mode-switch" role="group" aria-label="Choose experience">
-      <button type="button" data-mode="current">Current</button>
-      <button type="button" data-mode="simple">Simple</button>
+function phoneShellMarkup(mode, role, label) {
+  return `<section class="comparison-phone ${role === 'primary' ? 'comparison-active' : 'comparison-preview'}" data-phone-mode="${mode}" data-phone-role="${role}">
+    <header class="comparison-phone-header">
+      <span>${mode === 'current' ? 'Current' : 'Simple'}</span>
+      <strong>${label}</strong>
+    </header>
+    <main class="app-shell" data-mode="${mode}" data-shell-role="${role}">
+      <div class="screens" ${role === 'primary' ? 'aria-live="polite"' : ''}></div>
+      <nav class="bottom-nav" aria-label="Primary navigation"></nav>
+      <div class="toast" role="status" aria-live="polite" aria-hidden="true">Demo action only</div>
+    </main>
+  </section>`;
+}
+
+function comparisonNotesMarkup() {
+  return `<aside class="comparison-panel" aria-label="Prototype overview">
+    <div class="comparison-hero">
+      <p class="comparison-kicker">Usability prototype</p>
+      <h1>Compare the current experience with a simpler concept.</h1>
+      <p>Both views use fictional account data. The highlighted phone stays fully interactive while the other remains visible as a stable reference.</p>
     </div>
-    <button class="reset-session" type="button" data-reset-session aria-label="Reset session">${icon('rotate')}<span>Reset</span></button>
-  </aside>
-  <main class="app-shell" data-mode="${currentMode}">
-    <div class="screens" aria-live="polite"></div>
-    <nav class="bottom-nav" aria-label="Primary navigation"></nav>
-    <div class="toast" role="status" aria-live="polite" aria-hidden="true">Demo action only</div>
-  </main>
+    <div class="prototype-toolbar" aria-label="Prototype controls">
+      <div class="prototype-identity"><strong>Choose the active demo</strong><span>Reset returns the selected experience to its default starting point.</span></div>
+      <div class="mode-switch" role="group" aria-label="Choose experience">
+        <button type="button" data-mode="current">Current</button>
+        <button type="button" data-mode="simple">Simple</button>
+      </div>
+      <button class="reset-session" type="button" data-reset-session aria-label="Reset session">${icon('rotate')}<span>Reset</span></button>
+    </div>
+    <div class="comparison-notes">
+      <article class="comparison-note-card">
+        <span>${icon('transfer')}</span>
+        <div><strong>Primary actions are clearer</strong><p>Simple Mode moves money tasks into larger, plainer actions that are easier to scan.</p></div>
+      </article>
+      <article class="comparison-note-card">
+        <span>${icon('menu')}</span>
+        <div><strong>Navigation is reduced</strong><p>The concept trims the experience from four tabs to three so there are fewer competing choices on each screen.</p></div>
+      </article>
+      <article class="comparison-note-card">
+        <span>${icon('shield')}</span>
+        <div><strong>Safety checks stay visible</strong><p>Extra review steps, helper support, and reminders remain in context instead of being buried in secondary screens.</p></div>
+      </article>
+    </div>
+  </aside>`;
+}
+
+app.innerHTML = `${sprite()}<div class="prototype-layout">
+  <section class="prototype-mobile">
+    <aside class="prototype-toolbar" aria-label="Prototype controls">
+      <div class="prototype-identity"><strong>Usability prototype</strong><span>Unofficial &middot; fictional data only</span></div>
+      <div class="mode-switch" role="group" aria-label="Choose experience">
+        <button type="button" data-mode="current">Current</button>
+        <button type="button" data-mode="simple">Simple</button>
+      </div>
+      <button class="reset-session" type="button" data-reset-session aria-label="Reset session">${icon('rotate')}<span>Reset</span></button>
+    </aside>
+    ${phoneShellMarkup(currentMode, 'primary', 'Active demo')}
+  </section>
+  <section class="prototype-desktop" aria-label="Desktop comparison view">
+    <div class="comparison-stage">
+      ${phoneShellMarkup('current', 'desktop-current', 'Full navigation baseline')}
+      ${phoneShellMarkup('simple', 'desktop-simple', 'Simplified concept preview')}
+    </div>
+    ${comparisonNotesMarkup()}
+  </section>
 </div>`;
 
-const shell = app.querySelector('.app-shell');
+const shell = app.querySelector('[data-shell-role="primary"]');
 const screensRoot = shell.querySelector('.screens');
 const navRoot = shell.querySelector('.bottom-nav');
 
@@ -282,12 +333,6 @@ function saveActiveScroll() {
   if (activeScroll) state.scrollPositions[state.activeTab] = activeScroll.scrollTop;
 }
 
-function renderNav() {
-  const items = navItemsForMode();
-  navRoot.dataset.count = String(items.length);
-  navRoot.innerHTML = items.map((item) => `<button type="button" data-tab="${item.id}" aria-label="${item.label}" aria-current="${item.id === activeState().activeTab ? 'page' : 'false'}">${icon(item.icon)}<span>${item.label}</span></button>`).join('');
-}
-
 function restoreActiveScroll() {
   const state = activeState();
   requestAnimationFrame(() => {
@@ -296,12 +341,11 @@ function restoreActiveScroll() {
   });
 }
 
-function applyChartState() {
-  if (currentMode !== 'current') return;
-  const worth = modeStates.current.chartTab === 'worth';
-  const card = screensRoot.querySelector('.chart-card');
+function applyChartState(root, chartTab = 'spending') {
+  const worth = chartTab === 'worth';
+  const card = root.querySelector('.chart-card');
   if (!card) return;
-  card.querySelectorAll('[data-chart-tab]').forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.chartTab === modeStates.current.chartTab)));
+  card.querySelectorAll('[data-chart-tab]').forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.chartTab === chartTab)));
   card.querySelector('[data-chart-value]').textContent = worth ? '$11,178.62' : '$642.18';
   card.querySelector('[data-chart-label]').textContent = worth ? 'Your estimated net worth as of June 24, 2026' : 'Your spending as of June 24, 2026';
   card.classList.toggle('show-worth', worth);
@@ -309,26 +353,77 @@ function applyChartState() {
 
 function updateToolbar() {
   app.querySelectorAll('[data-mode]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mode === currentMode)));
+  app.querySelectorAll('.comparison-phone').forEach((phone) => {
+    phone.classList.toggle('is-highlighted', phone.dataset.phoneMode === currentMode);
+  });
+}
+
+function previewTabForMode(mode) {
+  return mode === 'current' ? 'accounts' : 'home';
+}
+
+function renderScreensInto(root, mode, { flowRoute = null, activeTab = previewTabForMode(mode), chartTab = 'spending', interactive = false } = {}) {
+  const screens = root.querySelector('.screens');
+  const nav = root.querySelector('.bottom-nav');
+  const items = mode === 'current' ? currentNavItems : simpleNavItems;
+  root.dataset.mode = mode;
+  root.classList.toggle('has-flow', Boolean(flowRoute));
+
+  if (flowRoute) {
+    screens.innerHTML = simpleFlowScreen(flowRoute, demoData);
+    nav.innerHTML = '';
+    nav.hidden = true;
+    return;
+  }
+
+  screens.innerHTML = mode === 'current' ? currentScreens() : simpleScreens(demoData);
+  nav.hidden = false;
+  nav.dataset.count = String(items.length);
+  nav.innerHTML = items.map((item) => `<button type="button" ${interactive ? `data-tab="${item.id}"` : ''} aria-label="${item.label}" aria-current="${item.id === activeTab ? 'page' : 'false'}">${icon(item.icon)}<span>${item.label}</span></button>`).join('');
+  screens.querySelector(`[data-screen="${activeTab}"]`)?.classList.add('is-active');
+
+  if (mode === 'current') {
+    applyChartState(screens, chartTab);
+  }
+}
+
+function renderDesktopComparison() {
+  const currentShell = app.querySelector('[data-shell-role="desktop-current"]');
+  const simpleShell = app.querySelector('[data-shell-role="desktop-simple"]');
+  const primaryMode = currentMode;
+  const secondaryMode = currentMode === 'current' ? 'simple' : 'current';
+  const primaryShell = primaryMode === 'current' ? currentShell : simpleShell;
+  const secondaryShell = primaryMode === 'current' ? simpleShell : currentShell;
+
+  renderScreensInto(primaryShell, primaryMode, {
+    flowRoute: primaryMode === 'simple' ? activeState().flowStack.at(-1) || null : null,
+    activeTab: activeState().activeTab,
+    chartTab: modeStates.current.chartTab,
+    interactive: true
+  });
+
+  renderScreensInto(secondaryShell, secondaryMode, {
+    activeTab: previewTabForMode(secondaryMode),
+    chartTab: 'spending'
+  });
 }
 
 function renderMode() {
   const state = activeState();
   const route = state.flowStack[state.flowStack.length - 1];
-  shell.dataset.mode = currentMode;
-  shell.classList.toggle('has-flow', Boolean(route));
-  if (route) {
-    screensRoot.innerHTML = simpleFlowScreen(route, demoData);
-    navRoot.innerHTML = '';
-    navRoot.hidden = true;
-  } else {
-    screensRoot.innerHTML = currentMode === 'current' ? currentScreens() : simpleScreens(demoData);
-    navRoot.hidden = false;
-    renderNav();
-    const activeScreen = screensRoot.querySelector(`[data-screen="${state.activeTab}"]`);
-    activeScreen?.classList.add('is-active');
-    applyChartState();
+
+  renderScreensInto(shell, currentMode, {
+    flowRoute: route,
+    activeTab: state.activeTab,
+    chartTab: modeStates.current.chartTab,
+    interactive: true
+  });
+
+  if (!route) {
     restoreActiveScroll();
   }
+
+  renderDesktopComparison();
   updateToolbar();
 }
 
@@ -343,6 +438,7 @@ function switchTab(nextTab) {
   state.flowStack = [];
   navRoot.querySelectorAll('[data-tab]').forEach((button) => button.setAttribute('aria-current', button.dataset.tab === nextTab ? 'page' : 'false'));
   restoreActiveScroll();
+  renderDesktopComparison();
 }
 
 function setMode(nextMode) {
@@ -477,7 +573,7 @@ function finishFlow() {
 }
 
 function showToast(message = 'This control is visual only in the prototype.') {
-  const toast = shell.querySelector('.toast');
+  const toast = app.querySelector('.comparison-phone.is-highlighted .toast') || shell.querySelector('.toast');
   window.clearTimeout(toastTimer);
   toast.textContent = message;
   toast.setAttribute('aria-hidden', 'false');
@@ -505,12 +601,11 @@ app.addEventListener('click', (event) => {
   if (button.dataset.action && handleSimpleAction(button)) return;
   if (button.dataset.chartTab) {
     const card = button.closest('.chart-card');
+    const chartRoot = button.closest('.screens') || screensRoot;
     card.querySelectorAll('[data-chart-tab]').forEach((tab) => tab.setAttribute('aria-selected', String(tab === button)));
-    const worth = button.dataset.chartTab === 'worth';
     modeStates.current.chartTab = button.dataset.chartTab;
-    card.querySelector('[data-chart-value]').textContent = worth ? '$11,178.62' : '$642.18';
-    card.querySelector('[data-chart-label]').textContent = worth ? 'Your estimated net worth as of June 24, 2026' : 'Your spending as of June 24, 2026';
-    card.classList.toggle('show-worth', worth);
+    applyChartState(chartRoot, modeStates.current.chartTab);
+    renderDesktopComparison();
     return;
   }
   if (button.classList.contains('demo-action')) showToast();
