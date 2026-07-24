@@ -250,22 +250,24 @@ function phoneShellMarkup(mode, role, label) {
       <span>${mode === 'current' ? 'Current' : 'Simple'}</span>
       <strong>${label}</strong>
     </header>
-    <main class="app-shell" data-mode="${mode}" data-shell-role="${role}">
-      <div class="screens" ${role === 'primary' ? 'aria-live="polite"' : ''}></div>
-      <nav class="bottom-nav" aria-label="Primary navigation"></nav>
-      <div class="toast" role="status" aria-live="polite" aria-hidden="true">Demo action only</div>
-    </main>
+    <div class="comparison-phone-frame">
+      <main class="app-shell" data-mode="${mode}" data-shell-role="${role}">
+        <div class="screens" ${role === 'primary' ? 'aria-live="polite"' : ''}></div>
+        <nav class="bottom-nav" aria-label="Primary navigation"></nav>
+        <div class="toast" role="status" aria-live="polite" aria-hidden="true">Demo action only</div>
+      </main>
+    </div>
   </section>`;
 }
 
-function comparisonNotesMarkup() {
-  return `<aside class="comparison-panel" aria-label="Prototype overview">
-    <div class="comparison-hero">
+function comparisonDesktopHeaderMarkup() {
+  return `<header class="comparison-topbar" aria-label="Prototype comparison overview">
+    <div class="comparison-intro">
       <p class="comparison-kicker">Usability prototype</p>
-      <h1>Compare the current experience with a simpler concept.</h1>
-      <p>Both views use fictional account data. The highlighted phone stays fully interactive while the other remains visible as a stable reference.</p>
+      <h1>Current vs. Simple</h1>
+      <p>Compare the standard mobile flow with a simplified concept. The highlighted phone is the active demo, while the other stays visible as a stable side-by-side reference.</p>
     </div>
-    <div class="prototype-toolbar" aria-label="Prototype controls">
+    <div class="comparison-controls" aria-label="Prototype controls">
       <div class="prototype-identity"><strong>Choose the active demo</strong><span>Reset returns the selected experience to its default starting point.</span></div>
       <div class="mode-switch" role="group" aria-label="Choose experience">
         <button type="button" data-mode="current">Current</button>
@@ -273,21 +275,24 @@ function comparisonNotesMarkup() {
       </div>
       <button class="reset-session" type="button" data-reset-session aria-label="Reset session">${icon('rotate')}<span>Reset</span></button>
     </div>
-    <div class="comparison-notes">
-      <article class="comparison-note-card">
-        <span>${icon('transfer')}</span>
-        <div><strong>Primary actions are clearer</strong><p>Simple Mode moves money tasks into larger, plainer actions that are easier to scan.</p></div>
-      </article>
-      <article class="comparison-note-card">
-        <span>${icon('menu')}</span>
-        <div><strong>Navigation is reduced</strong><p>The concept trims the experience from four tabs to three so there are fewer competing choices on each screen.</p></div>
-      </article>
-      <article class="comparison-note-card">
-        <span>${icon('shield')}</span>
-        <div><strong>Safety checks stay visible</strong><p>Extra review steps, helper support, and reminders remain in context instead of being buried in secondary screens.</p></div>
-      </article>
-    </div>
-  </aside>`;
+  </header>`;
+}
+
+function comparisonNotesMarkup() {
+  return `<section class="comparison-notes" aria-label="Key differences">
+    <article class="comparison-note-card">
+      <span>${icon('transfer')}</span>
+      <div><strong>Primary actions are clearer</strong><p>Simple Mode moves money tasks into larger, plainer actions that are easier to scan.</p></div>
+    </article>
+    <article class="comparison-note-card">
+      <span>${icon('menu')}</span>
+      <div><strong>Navigation is reduced</strong><p>The concept trims the experience from four tabs to three so there are fewer competing choices on each screen.</p></div>
+    </article>
+    <article class="comparison-note-card">
+      <span>${icon('shield')}</span>
+      <div><strong>Safety checks stay visible</strong><p>Extra review steps, helper support, and reminders remain in context instead of being buried in secondary screens.</p></div>
+    </article>
+  </section>`;
 }
 
 app.innerHTML = `${sprite()}<div class="prototype-layout">
@@ -302,12 +307,13 @@ app.innerHTML = `${sprite()}<div class="prototype-layout">
     </aside>
     ${phoneShellMarkup(currentMode, 'primary', 'Active demo')}
   </section>
-  <section class="prototype-desktop" aria-label="Desktop comparison view">
+  <section class="comparison-desktop" aria-label="Desktop comparison view">
+    ${comparisonDesktopHeaderMarkup()}
+    ${comparisonNotesMarkup()}
     <div class="comparison-stage">
       ${phoneShellMarkup('current', 'desktop-current', 'Full navigation baseline')}
       ${phoneShellMarkup('simple', 'desktop-simple', 'Simplified concept preview')}
     </div>
-    ${comparisonNotesMarkup()}
   </section>
 </div>`;
 
