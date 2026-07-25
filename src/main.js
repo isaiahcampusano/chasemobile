@@ -261,14 +261,13 @@ function phoneShellMarkup(mode, role, label) {
 }
 
 function comparisonDesktopHeaderMarkup() {
-  return `<header class="comparison-topbar" aria-label="Prototype comparison overview">
+  return `<header class="comparison-topbar" aria-label="Current versus Simple prototype controls">
     <div class="comparison-intro">
       <p class="comparison-kicker">Usability prototype</p>
       <h1>Current vs. Simple</h1>
-      <p>Compare the standard mobile flow with a simplified concept. The highlighted phone is the active demo, while the other stays visible as a stable side-by-side reference.</p>
     </div>
     <div class="comparison-controls" aria-label="Prototype controls">
-      <div class="prototype-identity"><strong>Choose the active demo</strong><span>Reset returns the selected experience to its default starting point.</span></div>
+      <span class="comparison-controls-label">Active demo</span>
       <div class="mode-switch" role="group" aria-label="Choose experience">
         <button type="button" data-mode="current">Current</button>
         <button type="button" data-mode="simple">Simple</button>
@@ -278,27 +277,10 @@ function comparisonDesktopHeaderMarkup() {
   </header>`;
 }
 
-function comparisonNotesMarkup() {
-  return `<section class="comparison-notes" aria-label="Key differences">
-    <article class="comparison-note-card">
-      <span>${icon('transfer')}</span>
-      <div><strong>Primary actions are clearer</strong><p>Simple Mode moves money tasks into larger, plainer actions that are easier to scan.</p></div>
-    </article>
-    <article class="comparison-note-card">
-      <span>${icon('menu')}</span>
-      <div><strong>Navigation is reduced</strong><p>The concept trims the experience from four tabs to three so there are fewer competing choices on each screen.</p></div>
-    </article>
-    <article class="comparison-note-card">
-      <span>${icon('shield')}</span>
-      <div><strong>Safety checks stay visible</strong><p>Extra review steps, helper support, and reminders remain in context instead of being buried in secondary screens.</p></div>
-    </article>
-  </section>`;
-}
-
 app.innerHTML = `${sprite()}<div class="prototype-layout">
   <section class="prototype-mobile">
     <aside class="prototype-toolbar" aria-label="Prototype controls">
-      <div class="prototype-identity"><strong>Usability prototype</strong><span>Unofficial &middot; fictional data only</span></div>
+      <div class="prototype-identity"><strong>Current vs. Simple</strong><span>Usability prototype</span></div>
       <div class="mode-switch" role="group" aria-label="Choose experience">
         <button type="button" data-mode="current">Current</button>
         <button type="button" data-mode="simple">Simple</button>
@@ -309,10 +291,9 @@ app.innerHTML = `${sprite()}<div class="prototype-layout">
   </section>
   <section class="comparison-desktop" aria-label="Desktop comparison view">
     ${comparisonDesktopHeaderMarkup()}
-    ${comparisonNotesMarkup()}
     <div class="comparison-stage">
-      ${phoneShellMarkup('current', 'desktop-current', 'Full navigation baseline')}
-      ${phoneShellMarkup('simple', 'desktop-simple', 'Simplified concept preview')}
+      ${phoneShellMarkup('current', 'desktop-current', 'Full app')}
+      ${phoneShellMarkup('simple', 'desktop-simple', 'Simple mode')}
     </div>
   </section>
 </div>`;
