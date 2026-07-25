@@ -67,7 +67,7 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
         </div>
       </div>
     </div>
-  </section>`}var d=[{icon:`shield`,label:`Simple Mode controls`,description:`Adjust how the prototype simplifies language, buttons, and review steps before money moves.`,items:[[`Large text and buttons`,`On`],[`Plain-language reviews`,`On`],[`Extra payment review`,`On`]]},{icon:`bell`,label:`Notifications`,description:`Choose which reminders stay visible in Simple Mode so important updates stand out.`,items:[[`Bill reminders`,`On`],[`Payment confirmations`,`On`],[`Low balance alerts`,`On`]]},{icon:`user`,label:`Trusted helper`,description:`Manage who can review a transfer with you and when the app should ask for another set of eyes.`,items:[[`Primary helper`,`Ready`],[`New payee reviews`,`On`],[`Large amount checks`,`On`]]},{icon:`shield`,label:`Card controls`,description:`Keep everyday card actions in one place with simple labels and clear next steps.`,items:[[`Card lock`,`Available`],[`Travel notices`,`Available`],[`Merchant alerts`,`On`]]},{icon:`document`,label:`Statements & documents`,description:`Find saved paperwork with shorter labels and fewer steps to open the right document.`,items:[[`Monthly statements`,`Ready`],[`Tax documents`,`Ready`],[`Shared copies`,`Available`]]}];function ee(){return`<section class="screen simple-screen simple-settings" data-screen="settings" aria-label="Settings">
+  </section>`}var d=[{icon:`shield`,label:`Simple Mode controls`,description:`Adjust how the prototype simplifies language, buttons, and review steps before money moves.`,items:[[`Large text and buttons`,`On`],[`Plain-language reviews`,`On`],[`Extra payment review`,`On`]]},{icon:`bell`,label:`Notifications`,description:`Choose which reminders stay visible in Simple Mode so important updates stand out.`,items:[[`Bill reminders`,`On`],[`Payment confirmations`,`On`],[`Low balance alerts`,`On`]]},{icon:`user`,label:`Trusted helper`,description:`Manage who can review a transfer with you and when the app should ask for another set of eyes.`,items:[[`Primary helper`,`Ready`],[`New payee reviews`,`On`],[`Large amount checks`,`On`]]},{icon:`shield`,label:`Card controls`,description:`Keep everyday card actions in one place with simple labels and clear next steps.`,items:[[`Card lock`,`Available`],[`Travel notices`,`Available`],[`Merchant alerts`,`On`]]},{icon:`document`,label:`Statements & documents`,description:`Find saved paperwork with shorter labels and fewer steps to open the right document.`,items:[[`Monthly statements`,`Ready`],[`Tax documents`,`Ready`],[`Shared copies`,`Available`]]}];function f(){return`<section class="screen simple-screen simple-settings" data-screen="settings" aria-label="Settings">
     ${c(`Settings`)}
     <div class="screen-scroll" tabindex="0">
       <div class="simple-content">
@@ -84,23 +84,23 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
         <p class="settings-note">Prototype only. Simple Mode settings show how Chase could support seniors, kids, and caregivers without changing the underlying account.</p>
       </div>
     </div>
-  </section>`}function te(e){return`${l(e)}${u(e)}${ee()}`}function ne(e,t=``){return`<header class="flow-header sticky-header">
+  </section>`}function ee(e){return`${l(e)}${u(e)}${f()}`}function te(e,t=``){return`<header class="flow-header sticky-header">
     ${s()}
     <div><button type="button" data-flow-back aria-label="Go back">${n(`arrowLeft`)}</button><span><small>${t}</small><h1>${e}</h1></span><i aria-hidden="true"></i></div>
-  </header>`}function f(e,t,n,r){return`<div class="choice-list">${t.map((t,i)=>{let a=n?n===t.id:i===0;return`<label><input type="radio" name="${e}" value="${t.id}" ${a?`checked`:``} required><span>${r(t)}</span></label>`}).join(``)}</div>`}function p(e,t,n={}){return`<form class="flow-form" data-flow-form="send">
-    <fieldset><legend>Who are you sending money to?</legend>${f(`recipientId`,e.recipients,n.recipientId||t,e=>`<strong>${e.name}</strong><small>Last sent ${e.lastSent}</small>`)}</fieldset>
+  </header>`}function p(e,t,n,r){return`<div class="choice-list">${t.map((t,i)=>{let a=n?n===t.id:i===0;return`<label><input type="radio" name="${e}" value="${t.id}" ${a?`checked`:``} required><span>${r(t)}</span></label>`}).join(``)}</div>`}function m(e,t,n={}){return`<form class="flow-form" data-flow-form="send">
+    <fieldset><legend>Who are you sending money to?</legend>${p(`recipientId`,e.recipients,n.recipientId||t,e=>`<strong>${e.name}</strong><small>Last sent ${e.lastSent}</small>`)}</fieldset>
     <label class="amount-field"><span>Amount</span><span><b>$</b><input name="amount" type="number" inputmode="decimal" min="0.01" max="5000" step="0.01" placeholder="0.00" value="${n.amount||``}" required></span><small>Demo limit: $5,000.00</small></label>
     <button class="simple-continue" type="button" data-continue-flow>Review</button>
-  </form>`}function m(e,t,n={}){return`<form class="flow-form" data-flow-form="bill">
-    <fieldset><legend>Choose a bill</legend>${f(`billId`,e.bills,n.billId||t,e=>`<strong>${e.payee}</strong><small>Due ${e.due} &middot; ${a(e.amount)}</small>`)}</fieldset>
+  </form>`}function h(e,t,n={}){return`<form class="flow-form" data-flow-form="bill">
+    <fieldset><legend>Choose a bill</legend>${p(`billId`,e.bills,n.billId||t,e=>`<strong>${e.payee}</strong><small>Due ${e.due} &middot; ${a(e.amount)}</small>`)}</fieldset>
     <label class="amount-field"><span>Payment amount</span><span><b>$</b><input name="amount" type="number" inputmode="decimal" min="0.01" max="5000" step="0.01" placeholder="0.00" value="${n.amount||``}" required></span></label>
     <button class="simple-continue" type="button" data-continue-flow>Review payment</button>
-  </form>`}function h(e,t={}){return`<form class="flow-form" data-flow-form="transfer">
+  </form>`}function g(e,t={}){return`<form class="flow-form" data-flow-form="transfer">
     <label class="select-field"><span>From</span><select name="fromAccount" required>${e.accounts.map(e=>`<option value="${e.id}" ${t.fromAccount===e.id?`selected`:``}>${e.name} &middot; ${a(e.balance)}</option>`).join(``)}</select></label>
     <label class="select-field"><span>To</span><select name="toAccount" required>${[...e.accounts].reverse().map(e=>`<option value="${e.id}" ${t.toAccount===e.id?`selected`:``}>${e.name} &middot; ${a(e.balance)}</option>`).join(``)}</select></label>
     <label class="amount-field"><span>Amount</span><span><b>$</b><input name="amount" type="number" inputmode="decimal" min="0.01" max="5000" step="0.01" placeholder="0.00" value="${t.amount||``}" required></span></label>
     <button class="simple-continue" type="button" data-continue-flow>Review transfer</button>
-  </form>`}function g(e,t){let n=a(Number(e.payload.amount)),r;if(e.type===`send`)r=[[`To`,t.recipients.find(t=>t.id===e.payload.recipientId)?.name],[`From`,t.accounts[0].name],[`Amount`,n]];else if(e.type===`bill`)r=[[`Payee`,t.bills.find(t=>t.id===e.payload.billId)?.payee],[`From`,t.accounts[0].name],[`Amount`,n]];else{let i=t.accounts.find(t=>t.id===e.payload.fromAccount),a=t.accounts.find(t=>t.id===e.payload.toAccount);r=[[`From`,i?.name],[`To`,a?.name],[`Amount`,n]]}return`<div class="flow-review"><div class="review-amount"><span>Review amount</span><strong>${n}</strong></div><dl>${r.map(([e,t])=>`<div><dt>${e}</dt><dd>${t}</dd></div>`).join(``)}</dl><div class="demo-warning"><strong>Simple Mode check</strong><span>We show the recipient, account, and amount one more time. For a new person or unusual amount, Chase could ask a trusted helper to review.</span></div><button class="simple-continue" type="button" data-confirm-flow>Confirm demo</button><button class="simple-secondary" type="button" data-action="trusted-helper-review">Ask trusted helper</button></div>`}function _(e){return`<div class="flow-complete"><span class="complete-mark">${n(`check`)}</span><p>Demo complete</p><h2>${{send:`Send money`,bill:`Bill payment`,transfer:`Transfer`}[e.type]} reviewed</h2><p>No money moved and no banking activity was created.</p><button class="simple-continue" type="button" data-flow-done>Return home</button></div>`}function v(e,t){let n=t.transactions.find(t=>t.id===e.transactionId),r=t.accounts.find(e=>e.id===n?.accountId);return n?`<div class="transaction-detail"><span class="transaction-mark large">${n.merchant.slice(0,1)}</span><h2>${n.merchant}</h2><strong class="detail-amount ${n.amount>0?`positive`:``}">${a(n.amount)}</strong><dl><div><dt>Date</dt><dd>${n.date}</dd></div><div><dt>Account</dt><dd>${r?.name} &middot; ${r?.lastFour}</dd></div><div><dt>Status</dt><dd>Completed</dd></div></dl><button class="simple-secondary" type="button" data-flow-back>Go back</button></div>`:`<p class="empty-state">Transaction not found.</p>`}function y(e){return`<div class="detail-stack">
+  </form>`}function _(e,t){let n=a(Number(e.payload.amount)),r;if(e.type===`send`)r=[[`To`,t.recipients.find(t=>t.id===e.payload.recipientId)?.name],[`From`,t.accounts[0].name],[`Amount`,n]];else if(e.type===`bill`)r=[[`Payee`,t.bills.find(t=>t.id===e.payload.billId)?.payee],[`From`,t.accounts[0].name],[`Amount`,n]];else{let i=t.accounts.find(t=>t.id===e.payload.fromAccount),a=t.accounts.find(t=>t.id===e.payload.toAccount);r=[[`From`,i?.name],[`To`,a?.name],[`Amount`,n]]}return`<div class="flow-review"><div class="review-amount"><span>Review amount</span><strong>${n}</strong></div><dl>${r.map(([e,t])=>`<div><dt>${e}</dt><dd>${t}</dd></div>`).join(``)}</dl><div class="demo-warning"><strong>Simple Mode check</strong><span>We show the recipient, account, and amount one more time. For a new person or unusual amount, Chase could ask a trusted helper to review.</span></div><button class="simple-continue" type="button" data-confirm-flow>Confirm demo</button><button class="simple-secondary" type="button" data-action="trusted-helper-review">Ask trusted helper</button></div>`}function v(e){return`<div class="flow-complete"><span class="complete-mark">${n(`check`)}</span><p>Demo complete</p><h2>${{send:`Send money`,bill:`Bill payment`,transfer:`Transfer`}[e.type]} reviewed</h2><p>No money moved and no banking activity was created.</p><button class="simple-continue" type="button" data-flow-done>Return home</button></div>`}function ne(e,t){let n=t.transactions.find(t=>t.id===e.transactionId),r=t.accounts.find(e=>e.id===n?.accountId);return n?`<div class="transaction-detail"><span class="transaction-mark large">${n.merchant.slice(0,1)}</span><h2>${n.merchant}</h2><strong class="detail-amount ${n.amount>0?`positive`:``}">${a(n.amount)}</strong><dl><div><dt>Date</dt><dd>${n.date}</dd></div><div><dt>Account</dt><dd>${r?.name} &middot; ${r?.lastFour}</dd></div><div><dt>Status</dt><dd>Completed</dd></div></dl><button class="simple-secondary" type="button" data-flow-back>Go back</button></div>`:`<p class="empty-state">Transaction not found.</p>`}function re(e){return`<div class="detail-stack">
     <article class="detail-hero">
       <p class="detail-kicker">All activity</p>
       <h2>Recent transactions</h2>
@@ -114,7 +114,7 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
         ${n(`chevron`)}
       </button>`).join(``)}
     </div>
-  </div>`}function b(e){let t=e.transactions.find(e=>e.amount<0);return`<div class="detail-stack">
+  </div>`}function y(e){let t=e.transactions.find(e=>e.amount<0);return`<div class="detail-stack">
     <article class="detail-hero">
       <p class="detail-kicker">Charge support</p>
       <h2>Get help before you act</h2>
@@ -129,7 +129,7 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
       <button type="button" data-action="share-with-helper" aria-label="Share with trusted helper">${n(`user`)}<span>Share with trusted helper</span>${n(`chevron`)}</button>
       <button type="button" data-action="contact-support" aria-label="Contact Chase support">${n(`chat`)}<span>Contact Chase support</span>${n(`chevron`)}</button>
     </div>
-  </div>`}function x(e){let t=e.accounts.reduce((e,t)=>e+t.balance,0);return`<div class="detail-stack">
+  </div>`}function b(e){let t=e.accounts.reduce((e,t)=>e+t.balance,0);return`<div class="detail-stack">
     <article class="detail-hero">
       <p class="detail-kicker">Profile</p>
       <h2>Demo customer</h2>
@@ -145,7 +145,7 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
       <button type="button" data-action="open-settings-tab" aria-label="Open settings">${n(`gear`)}<span>Open settings</span>${n(`chevron`)}</button>
       <button type="button" data-action="view-all-transactions" aria-label="Open recent activity">${n(`receipt`)}<span>Open recent activity</span>${n(`chevron`)}</button>
     </div>
-  </div>`}function re(e){let t=d[e.sectionIndex]||d[0];return`<div class="detail-stack">
+  </div>`}function x(e){let t=d[e.sectionIndex]||d[0];return`<div class="detail-stack">
     <article class="detail-hero">
       <p class="detail-kicker">Settings</p>
       <h2>${t.label}</h2>
@@ -154,12 +154,12 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
     <div class="simple-controls-card">
       ${t.items.map(([e,t])=>`<div><strong>${e}</strong><span>${t}</span></div>`).join(``)}
     </div>
-  </div>`}function ie(e,t){let n={send:`Send money`,bill:`Pay a bill`,transfer:`Transfer`,transaction:`Transaction details`,activity:`Recent activity`,help:`Get help`,profile:`Profile`,settings:d[e.sectionIndex]?.label||`Settings`},r=e.type===`transaction`?v(e,t):e.type===`activity`?y(t):e.type===`help`?b(t):e.type===`profile`?x(t):e.type===`settings`?re(e):e.step===`review`?g(e,t):e.step===`complete`?_(e):e.type===`send`?p(t,e.presetId,e.payload):e.type===`bill`?m(t,e.presetId,e.payload):h(t,e.payload),i=e.type===`transaction`?`Recent activity`:e.type===`activity`?`Account history`:e.type===`help`?`Support`:e.type===`profile`?`Account overview`:e.type===`settings`?`Settings`:e.step===`review`?`Step 2 of 2`:e.step===`complete`?`Finished`:`Step 1 of 2`;return`<section class="flow-screen" data-flow-screen="${e.type}">${ne(n[e.type],i)}<div class="flow-scroll" tabindex="0">${r}</div></section>`}function S(e=`dark`){return`<div class="status-bar status-${e}" aria-hidden="true">
+  </div>`}function S(e,t){let n={send:`Send money`,bill:`Pay a bill`,transfer:`Transfer`,transaction:`Transaction details`,activity:`Recent activity`,help:`Get help`,profile:`Profile`,settings:d[e.sectionIndex]?.label||`Settings`},r=e.type===`transaction`?ne(e,t):e.type===`activity`?re(t):e.type===`help`?y(t):e.type===`profile`?b(t):e.type===`settings`?x(e):e.step===`review`?_(e,t):e.step===`complete`?v(e):e.type===`send`?m(t,e.presetId,e.payload):e.type===`bill`?h(t,e.presetId,e.payload):g(t,e.payload),i=e.type===`transaction`?`Recent activity`:e.type===`activity`?`Account history`:e.type===`help`?`Support`:e.type===`profile`?`Account overview`:e.type===`settings`?`Settings`:e.step===`review`?`Step 2 of 2`:e.step===`complete`?`Finished`:`Step 1 of 2`;return`<section class="flow-screen" data-flow-screen="${e.type}">${te(n[e.type],i)}<div class="flow-scroll" tabindex="0">${r}</div></section>`}function C(e=`dark`){return`<div class="status-bar status-${e}" aria-hidden="true">
     <span class="status-time">9:41</span>
     <div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi">Wi-Fi</span><span class="battery">84</span></div>
-  </div>`}function C(e,t,r=``){return`<button class="action-button demo-action ${r}" type="button">${n(t)}<span>${e}</span></button>`}function w(e,t){return`<button class="list-row demo-action" type="button">${n(t)}<span>${e}</span>${n(`chevron`,`row-chevron`)}</button>`}function ae(){return`<section class="screen account-screen" data-screen="accounts" aria-labelledby="accounts-title">
+  </div>`}function w(e,t,r=``){return`<button class="action-button demo-action ${r}" type="button">${n(t)}<span>${e}</span></button>`}function T(e,t){return`<button class="list-row demo-action" type="button">${n(t)}<span>${e}</span>${n(`chevron`,`row-chevron`)}</button>`}function ie(){return`<section class="screen account-screen" data-screen="accounts" aria-labelledby="accounts-title">
     <header class="account-header sticky-header">
-      ${S()}
+      ${C()}
       <div class="search-row">
         <button class="round-icon demo-action" type="button" aria-label="Add account">${n(`wallet`)}<span class="tiny-plus">+</span></button>
         <button class="search-box demo-action" type="button">${n(`search`)}<span>What are you looking for?</span></button>
@@ -234,8 +234,8 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
 
         <section class="content-section visit-section">
           <h2>Visit us</h2>
-          ${w(`Schedule a meeting`,`calendar`)}
-          ${w(`ATM & branch`,`bank`)}
+          ${T(`Schedule a meeting`,`calendar`)}
+          ${T(`ATM & branch`,`bank`)}
         </section>
         <section class="disclosure-section">
           <h2>Disclosures</h2>
@@ -245,29 +245,29 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
         </section>
       </div>
     </div>
-  </section>`}function oe(){return`<section class="screen transfer-screen" data-screen="transfer" aria-labelledby="transfer-title">
-    <header class="blue-header sticky-header">${S(`light`)}<h1 id="transfer-title">Pay &amp; Transfer</h1></header>
+  </section>`}function ae(){return`<section class="screen transfer-screen" data-screen="transfer" aria-labelledby="transfer-title">
+    <header class="blue-header sticky-header">${C(`light`)}<h1 id="transfer-title">Pay &amp; Transfer</h1></header>
     <div class="screen-scroll" tabindex="0">
       <div class="transfer-content">
-        <div class="transfer-grid">${[[`card`,`Pay bills`],[`cash`,`Send money`],[`bank`,`Wires & global transfers`],[`transfer`,`Transfer`],[`receipt`,`Request or split`],[`check`,`Deposit checks`]].map(([e,t])=>C(t,e)).join(``)}</div>
+        <div class="transfer-grid">${[[`card`,`Pay bills`],[`cash`,`Send money`],[`bank`,`Wires & global transfers`],[`transfer`,`Transfer`],[`receipt`,`Request or split`],[`check`,`Deposit checks`]].map(([e,t])=>w(t,e)).join(``)}</div>
         <div class="menu-list">
-          ${w(`See activity`,`cash`)}
-          ${w(`Manage recipients`,`users`)}
-          ${w(`Manage external accounts`,`bank`)}
-          ${w(`Settings`,`gear`)}
+          ${T(`See activity`,`cash`)}
+          ${T(`Manage recipients`,`users`)}
+          ${T(`Manage external accounts`,`bank`)}
+          ${T(`Settings`,`gear`)}
         </div>
         <div class="prototype-note"><strong>Prototype only</strong><span>Payments and transfers are visual demonstrations and cannot be submitted.</span></div>
       </div>
     </div>
-  </section>`}function T(){return`<div class="spending-chart" role="img" aria-label="Demo spending line chart comparing this month with last month">
+  </section>`}function E(){return`<div class="spending-chart" role="img" aria-label="Demo spending line chart comparing this month with last month">
     <svg viewBox="0 0 320 190" preserveAspectRatio="none" aria-hidden="true">
       <path class="chart-previous" d="M8 165 L30 142 L100 142 L118 134 L135 134 L145 120 L170 120 L183 109 L205 109 L214 88 L235 88 L244 56 L268 45 L290 45 L305 28 L316 28"/>
       <path class="chart-current" d="M8 166 L18 142 L36 130 L57 130 L68 112 L87 97 L103 92 L119 80 L139 58 L153 58 L165 44 L184 38 L195 20 L216 20 L226 2 L265 2"/>
       <line x1="266" y1="-4" x2="266" y2="168"/>
     </svg>
     <div class="chart-axis"><span>1</span><span>16</span><span>31</span></div>
-  </div>`}function E(){return`<section class="screen plan-screen" data-screen="plan" aria-labelledby="plan-title">
-    <header class="green-header sticky-header">${S(`light`)}<h1 id="plan-title">Wealth Plan</h1></header>
+  </div>`}function D(){return`<section class="screen plan-screen" data-screen="plan" aria-labelledby="plan-title">
+    <header class="green-header sticky-header">${C(`light`)}<h1 id="plan-title">Wealth Plan</h1></header>
     <div class="screen-scroll" tabindex="0">
       <div class="plan-content">
         <section class="goal-hero">
@@ -287,7 +287,7 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
               <button type="button" role="tab" aria-selected="false" data-chart-tab="worth">Net worth history</button>
             </div>
             <div class="chart-copy"><strong data-chart-value>$642.18</strong><p data-chart-label>Your spending as of June 24, 2026</p></div>
-            ${T()}
+            ${E()}
             <div class="chart-legend"><span><i class="blue-dot"></i>Jun 24 <b>$642.18</b></span><span><i class="gray-dot"></i>May 24 <b>$518.44</b></span></div>
             <button class="text-link demo-action" type="button">${n(`menu`)} See chart as table</button>
           </article>
@@ -319,17 +319,17 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
         </section>
       </div>
     </div>
-  </section>`}function D(){return`<section class="screen more-screen" data-screen="more" aria-labelledby="more-title">
-    <header class="more-header sticky-header">${S(`light`)}<div><span aria-hidden="true"></span><h1 id="more-title">More</h1><button class="header-link demo-action" type="button">Sign out</button></div></header>
+  </section>`}function O(){return`<section class="screen more-screen" data-screen="more" aria-labelledby="more-title">
+    <header class="more-header sticky-header">${C(`light`)}<div><span aria-hidden="true"></span><h1 id="more-title">More</h1><button class="header-link demo-action" type="button">Sign out</button></div></header>
     <div class="screen-scroll" tabindex="0">
       <div class="more-content">
-        <section class="more-section"><h2>Open an account</h2><div class="more-grid">${[[`card`,`Credit card`],[`wallet`,`Checking account`],[`pig`,`Savings/CD account`],[`briefcase`,`Business account`],[`home`,`Mortgage & Equity`],[`car`,`Auto`],[`dots`,`All products`],[`receipt`,`Application status`]].map(([e,t])=>C(t,e)).join(``)}</div></section>
-        <section class="more-section support-section"><h2>Support</h2><div class="more-grid support-grid">${[[`atm`,`Find ATM & branch`],[`calendar`,`Schedule a meeting`],[`chat`,`Contact us`]].map(([e,t])=>C(t,e)).join(``)}</div></section>
+        <section class="more-section"><h2>Open an account</h2><div class="more-grid">${[[`card`,`Credit card`],[`wallet`,`Checking account`],[`pig`,`Savings/CD account`],[`briefcase`,`Business account`],[`home`,`Mortgage & Equity`],[`car`,`Auto`],[`dots`,`All products`],[`receipt`,`Application status`]].map(([e,t])=>w(t,e)).join(``)}</div></section>
+        <section class="more-section support-section"><h2>Support</h2><div class="more-grid support-grid">${[[`atm`,`Find ATM & branch`],[`calendar`,`Schedule a meeting`],[`chat`,`Contact us`]].map(([e,t])=>w(t,e)).join(``)}</div></section>
         <section class="feedback-section"><h2>How do you like the new experience?</h2><button class="feedback-button demo-action" type="button">Share your feedback</button></section>
         <div class="prototype-note"><strong>Unofficial prototype</strong><span>No accounts can be opened and no personal information is collected.</span></div>
       </div>
     </div>
-  </section>`}var O=[{id:`accounts`,label:`Accounts`,icon:`wallet`},{id:`transfer`,label:`Pay & transfer`,icon:`transfer`},{id:`plan`,label:`Plan & track`,icon:`plan`},{id:`more`,label:`More`,icon:`menu`}],k=document.querySelector(`#app`),A=new URLSearchParams(window.location.search).get(`mode`)===`simple`?`simple`:`current`,j=i(),M,N={current:{activeTab:`accounts`,scrollPositions:Object.fromEntries(O.map(({id:e})=>[e,0])),flowStack:[],chartTab:`spending`},simple:{activeTab:`home`,scrollPositions:Object.fromEntries(o.map(({id:e})=>[e,0])),flowStack:[]}};function P(e,t,n){return`<section class="comparison-phone ${t===`primary`?`comparison-active`:`comparison-preview`}" data-phone-mode="${e}" data-phone-role="${t}">
+  </section>`}var k=[{id:`accounts`,label:`Accounts`,icon:`wallet`},{id:`transfer`,label:`Pay & transfer`,icon:`transfer`},{id:`plan`,label:`Plan & track`,icon:`plan`},{id:`more`,label:`More`,icon:`menu`}],A=document.querySelector(`#app`),j=new URLSearchParams(window.location.search).get(`mode`)===`simple`?`simple`:`current`,M=i(),N,P={current:{activeTab:`accounts`,scrollPositions:Object.fromEntries(k.map(({id:e})=>[e,0])),flowStack:[],chartTab:`spending`},simple:{activeTab:`home`,scrollPositions:Object.fromEntries(o.map(({id:e})=>[e,0])),flowStack:[]}};function F(e,t,n){return`<section class="comparison-phone ${t===`primary`?`comparison-active`:`comparison-preview`}" data-phone-mode="${e}" data-phone-role="${t}">
     <header class="comparison-phone-header">
       <span>${e===`current`?`Current`:`Simple`}</span>
       <strong>${n}</strong>
@@ -341,51 +341,36 @@ var e={wallet:`<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 9h15
         <div class="toast" role="status" aria-live="polite" aria-hidden="true">Demo action only</div>
       </main>
     </div>
-  </section>`}function F(){return`<header class="comparison-topbar" aria-label="Prototype comparison overview">
+  </section>`}function I(){return`<header class="comparison-topbar" aria-label="Current versus Simple prototype controls">
     <div class="comparison-intro">
       <p class="comparison-kicker">Usability prototype</p>
       <h1>Current vs. Simple</h1>
-      <p>Compare the standard mobile flow with a simplified concept. The highlighted phone is the active demo, while the other stays visible as a stable side-by-side reference.</p>
     </div>
     <div class="comparison-controls" aria-label="Prototype controls">
-      <div class="prototype-identity"><strong>Choose the active demo</strong><span>Reset returns the selected experience to its default starting point.</span></div>
+      <span class="comparison-controls-label">Active demo</span>
       <div class="mode-switch" role="group" aria-label="Choose experience">
         <button type="button" data-mode="current">Current</button>
         <button type="button" data-mode="simple">Simple</button>
       </div>
       <button class="reset-session" type="button" data-reset-session aria-label="Reset session">${n(`rotate`)}<span>Reset</span></button>
     </div>
-  </header>`}function I(){return`<section class="comparison-notes" aria-label="Key differences">
-    <article class="comparison-note-card">
-      <span>${n(`transfer`)}</span>
-      <div><strong>Primary actions are clearer</strong><p>Simple Mode moves money tasks into larger, plainer actions that are easier to scan.</p></div>
-    </article>
-    <article class="comparison-note-card">
-      <span>${n(`menu`)}</span>
-      <div><strong>Navigation is reduced</strong><p>The concept trims the experience from four tabs to three so there are fewer competing choices on each screen.</p></div>
-    </article>
-    <article class="comparison-note-card">
-      <span>${n(`shield`)}</span>
-      <div><strong>Safety checks stay visible</strong><p>Extra review steps, helper support, and reminders remain in context instead of being buried in secondary screens.</p></div>
-    </article>
-  </section>`}k.innerHTML=`${t()}<div class="prototype-layout">
+  </header>`}A.innerHTML=`${t()}<div class="prototype-layout">
   <section class="prototype-mobile">
     <aside class="prototype-toolbar" aria-label="Prototype controls">
-      <div class="prototype-identity"><strong>Usability prototype</strong><span>Unofficial &middot; fictional data only</span></div>
+      <div class="prototype-identity"><strong>Current vs. Simple</strong><span>Usability prototype</span></div>
       <div class="mode-switch" role="group" aria-label="Choose experience">
         <button type="button" data-mode="current">Current</button>
         <button type="button" data-mode="simple">Simple</button>
       </div>
       <button class="reset-session" type="button" data-reset-session aria-label="Reset session">${n(`rotate`)}<span>Reset</span></button>
     </aside>
-    ${P(A,`primary`,`Active demo`)}
+    ${F(j,`primary`,`Active demo`)}
   </section>
   <section class="comparison-desktop" aria-label="Desktop comparison view">
-    ${F()}
     ${I()}
     <div class="comparison-stage">
-      ${P(`current`,`desktop-current`,`Full navigation baseline`)}
-      ${P(`simple`,`desktop-simple`,`Simplified concept preview`)}
+      ${F(`current`,`desktop-current`,`Full app`)}
+      ${F(`simple`,`desktop-simple`,`Simple mode`)}
     </div>
   </section>
-</div>`;var L=k.querySelector(`[data-shell-role="primary"]`),R=L.querySelector(`.screens`),z=L.querySelector(`.bottom-nav`);function B(){return`${ae()}${oe()}${E()}${D()}`}function V(){return N[A]}function H(){return A===`current`?O:o}function U(){let e=V(),t=R.querySelector(`.screen.is-active .screen-scroll`);t&&(e.scrollPositions[e.activeTab]=t.scrollTop)}function W(){let e=V();requestAnimationFrame(()=>{let t=R.querySelector(`.screen.is-active .screen-scroll`);t&&(t.scrollTop=e.scrollPositions[e.activeTab]||0)})}function G(e,t=`spending`){let n=t===`worth`,r=e.querySelector(`.chart-card`);r&&(r.querySelectorAll(`[data-chart-tab]`).forEach(e=>e.setAttribute(`aria-selected`,String(e.dataset.chartTab===t))),r.querySelector(`[data-chart-value]`).textContent=n?`$11,178.62`:`$642.18`,r.querySelector(`[data-chart-label]`).textContent=n?`Your estimated net worth as of June 24, 2026`:`Your spending as of June 24, 2026`,r.classList.toggle(`show-worth`,n))}function se(){k.querySelectorAll(`[data-mode]`).forEach(e=>e.setAttribute(`aria-pressed`,String(e.dataset.mode===A))),k.querySelectorAll(`.comparison-phone`).forEach(e=>{e.classList.toggle(`is-highlighted`,e.dataset.phoneMode===A)})}function K(e){return e===`current`?`accounts`:`home`}function q(e,t,{flowRoute:r=null,activeTab:i=K(t),chartTab:a=`spending`,interactive:s=!1}={}){let c=e.querySelector(`.screens`),l=e.querySelector(`.bottom-nav`),u=t===`current`?O:o;if(e.dataset.mode=t,e.classList.toggle(`has-flow`,!!r),r){c.innerHTML=ie(r,j),l.innerHTML=``,l.hidden=!0;return}c.innerHTML=t===`current`?B():te(j),l.hidden=!1,l.dataset.count=String(u.length),l.innerHTML=u.map(e=>`<button type="button" ${s?`data-tab="${e.id}"`:``} aria-label="${e.label}" aria-current="${e.id===i?`page`:`false`}">${n(e.icon)}<span>${e.label}</span></button>`).join(``),c.querySelector(`[data-screen="${i}"]`)?.classList.add(`is-active`),t===`current`&&G(c,a)}function J(){let e=k.querySelector(`[data-shell-role="desktop-current"]`),t=k.querySelector(`[data-shell-role="desktop-simple"]`),n=A,r=A===`current`?`simple`:`current`,i=n===`current`?e:t,a=n===`current`?t:e;q(i,n,{flowRoute:n===`simple`&&V().flowStack.at(-1)||null,activeTab:V().activeTab,chartTab:N.current.chartTab,interactive:!0}),q(a,r,{activeTab:K(r),chartTab:`spending`})}function Y(){let e=V(),t=e.flowStack[e.flowStack.length-1];q(L,A,{flowRoute:t,activeTab:e.activeTab,chartTab:N.current.chartTab,interactive:!0}),t||W(),J(),se()}function ce(e){let t=V(),n=R.querySelector(`[data-screen="${e}"]`);!n||e===t.activeTab||(U(),R.querySelector(`.screen.is-active`)?.classList.remove(`is-active`),n.classList.add(`is-active`),t.activeTab=e,t.flowStack=[],z.querySelectorAll(`[data-tab]`).forEach(t=>t.setAttribute(`aria-current`,t.dataset.tab===e?`page`:`false`)),W(),J())}function le(e){if(!N[e]||e===A)return;U(),A=e;let t=V();t.activeTab=e===`current`?`accounts`:`home`,t.flowStack=[];let n=new URL(window.location.href);n.searchParams.set(`mode`,e),window.history.replaceState({},``,n),Y()}function X(e=`${A===`current`?`Current`:`Simple`} session reset.`){j=i();let t=V();t.activeTab=A===`current`?`accounts`:`home`,t.scrollPositions=Object.fromEntries(H().map(({id:e})=>[e,0])),t.flowStack=[],A===`current`&&(t.chartTab=`spending`),Y(),$(e)}function Z(e,{replace:t=!0}={}){A===`simple`&&(U(),t?N.simple.flowStack=[e]:N.simple.flowStack.push(e),Y())}function ue(e){A===`simple`&&(N.simple.activeTab=e,N.simple.scrollPositions[e]=0,N.simple.flowStack=[],Y())}function de(e){A===`simple`&&Z(e.dataset.transactionId?{type:`transaction`,step:`detail`,transactionId:e.dataset.transactionId}:{type:e.dataset.flow,step:`form`,presetId:e.dataset.recipient||e.dataset.bill||``},{replace:!e.dataset.transactionId||N.simple.flowStack.at(-1)?.type!==`activity`})}function fe(e){let t=Number(e.dataset.settingsSection);Z({type:`settings`,sectionIndex:Number.isNaN(t)?0:t})}function pe(e){if(A!==`simple`)return!1;let t=e.dataset.action;if(!t)return!1;if(t===`view-profile`)return Z({type:`profile`}),!0;if(t===`get-help`)return Z({type:`help`}),!0;if(t===`view-all-transactions`){let e=N.simple.flowStack.length===0;return!e&&N.simple.flowStack.at(-1)?.type===`activity`||Z({type:`activity`},{replace:e}),!0}return t===`open-settings-tab`?(ue(`settings`),!0):t===`share-with-helper`||t===`trusted-helper-review`?($(`A trusted helper review would start here in the full app.`),!0):t===`contact-support`?($(`Chase support would open here in the full app.`),!0):t===`sign-out`?(window.confirm(`Are you sure you want to sign out?`)&&X(`Signed out of the demo.`),!0):!1}function Q(){N.simple.flowStack.pop(),Y()}function me(e){let t=e.closest(`.flow-screen`)?.querySelector(`form`);if(!t||!t.reportValidity())return;let n=Object.fromEntries(new FormData(t));if(t.dataset.flowForm===`transfer`&&n.fromAccount===n.toAccount){$(`Choose two different accounts.`);return}let r=Number(n.amount);if(!Number.isFinite(r)||r<=0||r>5e3)return;let i=N.simple.flowStack.at(-1);i.payload=n,N.simple.flowStack.push({type:t.dataset.flowForm,step:`review`,payload:n}),Y()}function he(){let e=N.simple.flowStack.at(-1);N.simple.flowStack.push({...e,step:`complete`}),Y()}function ge(){N.simple.activeTab=`home`,N.simple.scrollPositions.home=0,N.simple.flowStack=[],Y()}function $(e=`This control is visual only in the prototype.`){let t=k.querySelector(`.comparison-phone.is-highlighted .toast`)||L.querySelector(`.toast`);window.clearTimeout(M),t.textContent=e,t.setAttribute(`aria-hidden`,`false`),t.classList.add(`is-visible`),M=window.setTimeout(()=>{t.classList.remove(`is-visible`),t.setAttribute(`aria-hidden`,`true`)},2200)}k.addEventListener(`submit`,e=>e.preventDefault()),k.addEventListener(`click`,e=>{let t=e.target.closest(`button`);if(t){if(t.dataset.mode)return le(t.dataset.mode);if(t.hasAttribute(`data-reset-session`))return X();if(t.dataset.tab)return ce(t.dataset.tab);if(t.dataset.settingsSection)return fe(t);if(t.dataset.flow||t.dataset.transactionId)return de(t);if(t.hasAttribute(`data-flow-back`))return Q();if(t.hasAttribute(`data-continue-flow`))return me(t);if(t.hasAttribute(`data-confirm-flow`))return he();if(t.hasAttribute(`data-flow-done`))return ge();if(!(t.dataset.action&&pe(t))){if(t.dataset.chartTab){let e=t.closest(`.chart-card`),n=t.closest(`.screens`)||R;e.querySelectorAll(`[data-chart-tab]`).forEach(e=>e.setAttribute(`aria-selected`,String(e===t))),N.current.chartTab=t.dataset.chartTab,G(n,N.current.chartTab),J();return}t.classList.contains(`demo-action`)&&$()}}}),Y();
+</div>`;var L=A.querySelector(`[data-shell-role="primary"]`),R=L.querySelector(`.screens`),z=L.querySelector(`.bottom-nav`);function B(){return`${ie()}${ae()}${D()}${O()}`}function V(){return P[j]}function H(){return j===`current`?k:o}function U(){let e=V(),t=R.querySelector(`.screen.is-active .screen-scroll`);t&&(e.scrollPositions[e.activeTab]=t.scrollTop)}function W(){let e=V();requestAnimationFrame(()=>{let t=R.querySelector(`.screen.is-active .screen-scroll`);t&&(t.scrollTop=e.scrollPositions[e.activeTab]||0)})}function G(e,t=`spending`){let n=t===`worth`,r=e.querySelector(`.chart-card`);r&&(r.querySelectorAll(`[data-chart-tab]`).forEach(e=>e.setAttribute(`aria-selected`,String(e.dataset.chartTab===t))),r.querySelector(`[data-chart-value]`).textContent=n?`$11,178.62`:`$642.18`,r.querySelector(`[data-chart-label]`).textContent=n?`Your estimated net worth as of June 24, 2026`:`Your spending as of June 24, 2026`,r.classList.toggle(`show-worth`,n))}function K(){A.querySelectorAll(`[data-mode]`).forEach(e=>e.setAttribute(`aria-pressed`,String(e.dataset.mode===j))),A.querySelectorAll(`.comparison-phone`).forEach(e=>{e.classList.toggle(`is-highlighted`,e.dataset.phoneMode===j)})}function q(e){return e===`current`?`accounts`:`home`}function J(e,t,{flowRoute:r=null,activeTab:i=q(t),chartTab:a=`spending`,interactive:s=!1}={}){let c=e.querySelector(`.screens`),l=e.querySelector(`.bottom-nav`),u=t===`current`?k:o;if(e.dataset.mode=t,e.classList.toggle(`has-flow`,!!r),r){c.innerHTML=S(r,M),l.innerHTML=``,l.hidden=!0;return}c.innerHTML=t===`current`?B():ee(M),l.hidden=!1,l.dataset.count=String(u.length),l.innerHTML=u.map(e=>`<button type="button" ${s?`data-tab="${e.id}"`:``} aria-label="${e.label}" aria-current="${e.id===i?`page`:`false`}">${n(e.icon)}<span>${e.label}</span></button>`).join(``),c.querySelector(`[data-screen="${i}"]`)?.classList.add(`is-active`),t===`current`&&G(c,a)}function Y(){let e=A.querySelector(`[data-shell-role="desktop-current"]`),t=A.querySelector(`[data-shell-role="desktop-simple"]`),n=j,r=j===`current`?`simple`:`current`,i=n===`current`?e:t,a=n===`current`?t:e;J(i,n,{flowRoute:n===`simple`&&V().flowStack.at(-1)||null,activeTab:V().activeTab,chartTab:P.current.chartTab,interactive:!0}),J(a,r,{activeTab:q(r),chartTab:`spending`})}function X(){let e=V(),t=e.flowStack[e.flowStack.length-1];J(L,j,{flowRoute:t,activeTab:e.activeTab,chartTab:P.current.chartTab,interactive:!0}),t||W(),Y(),K()}function oe(e){let t=V(),n=R.querySelector(`[data-screen="${e}"]`);!n||e===t.activeTab||(U(),R.querySelector(`.screen.is-active`)?.classList.remove(`is-active`),n.classList.add(`is-active`),t.activeTab=e,t.flowStack=[],z.querySelectorAll(`[data-tab]`).forEach(t=>t.setAttribute(`aria-current`,t.dataset.tab===e?`page`:`false`)),W(),Y())}function se(e){if(!P[e]||e===j)return;U(),j=e;let t=V();t.activeTab=e===`current`?`accounts`:`home`,t.flowStack=[];let n=new URL(window.location.href);n.searchParams.set(`mode`,e),window.history.replaceState({},``,n),X()}function Z(e=`${j===`current`?`Current`:`Simple`} session reset.`){M=i();let t=V();t.activeTab=j===`current`?`accounts`:`home`,t.scrollPositions=Object.fromEntries(H().map(({id:e})=>[e,0])),t.flowStack=[],j===`current`&&(t.chartTab=`spending`),X(),$(e)}function Q(e,{replace:t=!0}={}){j===`simple`&&(U(),t?P.simple.flowStack=[e]:P.simple.flowStack.push(e),X())}function ce(e){j===`simple`&&(P.simple.activeTab=e,P.simple.scrollPositions[e]=0,P.simple.flowStack=[],X())}function le(e){j===`simple`&&Q(e.dataset.transactionId?{type:`transaction`,step:`detail`,transactionId:e.dataset.transactionId}:{type:e.dataset.flow,step:`form`,presetId:e.dataset.recipient||e.dataset.bill||``},{replace:!e.dataset.transactionId||P.simple.flowStack.at(-1)?.type!==`activity`})}function ue(e){let t=Number(e.dataset.settingsSection);Q({type:`settings`,sectionIndex:Number.isNaN(t)?0:t})}function de(e){if(j!==`simple`)return!1;let t=e.dataset.action;if(!t)return!1;if(t===`view-profile`)return Q({type:`profile`}),!0;if(t===`get-help`)return Q({type:`help`}),!0;if(t===`view-all-transactions`){let e=P.simple.flowStack.length===0;return!e&&P.simple.flowStack.at(-1)?.type===`activity`||Q({type:`activity`},{replace:e}),!0}return t===`open-settings-tab`?(ce(`settings`),!0):t===`share-with-helper`||t===`trusted-helper-review`?($(`A trusted helper review would start here in the full app.`),!0):t===`contact-support`?($(`Chase support would open here in the full app.`),!0):t===`sign-out`?(window.confirm(`Are you sure you want to sign out?`)&&Z(`Signed out of the demo.`),!0):!1}function fe(){P.simple.flowStack.pop(),X()}function pe(e){let t=e.closest(`.flow-screen`)?.querySelector(`form`);if(!t||!t.reportValidity())return;let n=Object.fromEntries(new FormData(t));if(t.dataset.flowForm===`transfer`&&n.fromAccount===n.toAccount){$(`Choose two different accounts.`);return}let r=Number(n.amount);if(!Number.isFinite(r)||r<=0||r>5e3)return;let i=P.simple.flowStack.at(-1);i.payload=n,P.simple.flowStack.push({type:t.dataset.flowForm,step:`review`,payload:n}),X()}function me(){let e=P.simple.flowStack.at(-1);P.simple.flowStack.push({...e,step:`complete`}),X()}function he(){P.simple.activeTab=`home`,P.simple.scrollPositions.home=0,P.simple.flowStack=[],X()}function $(e=`This control is visual only in the prototype.`){let t=A.querySelector(`.comparison-phone.is-highlighted .toast`)||L.querySelector(`.toast`);window.clearTimeout(N),t.textContent=e,t.setAttribute(`aria-hidden`,`false`),t.classList.add(`is-visible`),N=window.setTimeout(()=>{t.classList.remove(`is-visible`),t.setAttribute(`aria-hidden`,`true`)},2200)}A.addEventListener(`submit`,e=>e.preventDefault()),A.addEventListener(`click`,e=>{let t=e.target.closest(`button`);if(t){if(t.dataset.mode)return se(t.dataset.mode);if(t.hasAttribute(`data-reset-session`))return Z();if(t.dataset.tab)return oe(t.dataset.tab);if(t.dataset.settingsSection)return ue(t);if(t.dataset.flow||t.dataset.transactionId)return le(t);if(t.hasAttribute(`data-flow-back`))return fe();if(t.hasAttribute(`data-continue-flow`))return pe(t);if(t.hasAttribute(`data-confirm-flow`))return me();if(t.hasAttribute(`data-flow-done`))return he();if(!(t.dataset.action&&de(t))){if(t.dataset.chartTab){let e=t.closest(`.chart-card`),n=t.closest(`.screens`)||R;e.querySelectorAll(`[data-chart-tab]`).forEach(e=>e.setAttribute(`aria-selected`,String(e===t))),P.current.chartTab=t.dataset.chartTab,G(n,P.current.chartTab),Y();return}t.classList.contains(`demo-action`)&&$()}}}),X();
