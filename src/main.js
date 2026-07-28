@@ -238,7 +238,7 @@ const modeStates = {
     chartTab: 'spending'
   },
   simple: {
-    activeTab: 'home',
+    activeTab: 'account',
     scrollPositions: Object.fromEntries(simpleNavItems.map(({ id }) => [id, 0])),
     flowStack: []
   }
@@ -346,7 +346,7 @@ function updateToolbar() {
 }
 
 function previewTabForMode(mode) {
-  return mode === 'current' ? 'accounts' : 'home';
+  return mode === 'current' ? 'accounts' : 'account';
 }
 
 function renderScreensInto(root, mode, { flowRoute = null, activeTab = previewTabForMode(mode), chartTab = 'spending', interactive = false } = {}) {
@@ -433,7 +433,7 @@ function setMode(nextMode) {
   saveActiveScroll();
   currentMode = nextMode;
   const state = activeState();
-  state.activeTab = nextMode === 'current' ? 'accounts' : 'home';
+  state.activeTab = nextMode === 'current' ? 'accounts' : 'account';
   state.flowStack = [];
   const url = new URL(window.location.href);
   url.searchParams.set('mode', nextMode);
@@ -444,7 +444,7 @@ function setMode(nextMode) {
 function resetSession(message = `${currentMode === 'current' ? 'Current' : 'Simple'} session reset.`) {
   demoData = createDemoData();
   const state = activeState();
-  state.activeTab = currentMode === 'current' ? 'accounts' : 'home';
+  state.activeTab = currentMode === 'current' ? 'accounts' : 'account';
   state.scrollPositions = Object.fromEntries(navItemsForMode().map(({ id }) => [id, 0]));
   state.flowStack = [];
   if (currentMode === 'current') state.chartTab = 'spending';
@@ -476,7 +476,7 @@ function openFlow(button) {
   const route = button.dataset.transactionId
     ? { type: 'transaction', step: 'detail', transactionId: button.dataset.transactionId }
     : { type: button.dataset.flow, step: 'form', presetId: button.dataset.recipient || button.dataset.bill || '' };
-  const replace = !button.dataset.transactionId || modeStates.simple.flowStack.at(-1)?.type !== 'activity';
+  const replace = !button.dataset.transactionId || modeStates.simple.flowStack.length === 0;
   openSimpleRoute(route, { replace });
 }
 
@@ -489,8 +489,8 @@ function handleSimpleAction(button) {
   if (currentMode !== 'simple') return false;
   const action = button.dataset.action;
   if (!action) return false;
-  if (action === 'view-profile') {
-    openSimpleRoute({ type: 'profile' });
+  if (action === 'view-profile' || action === 'view-more') {
+    openSimpleTab('more');
     return true;
   }
   if (action === 'get-help') {
@@ -498,13 +498,19 @@ function handleSimpleAction(button) {
     return true;
   }
   if (action === 'view-all-transactions') {
-    const replace = modeStates.simple.flowStack.length === 0;
-    if (!replace && modeStates.simple.flowStack.at(-1)?.type === 'activity') return true;
-    openSimpleRoute({ type: 'activity' }, { replace });
+    openSimpleTab('track');
     return true;
   }
-  if (action === 'open-settings-tab') {
-    openSimpleTab('settings');
+  if (action === 'open-settings-tab' || action === 'open-more-tab') {
+    openSimpleTab('more');
+    return true;
+  }
+  if (action === 'open-pay-tab') {
+    openSimpleTab('pay');
+    return true;
+  }
+  if (action === 'open-assistant-tab') {
+    openSimpleTab('assistant');
     return true;
   }
   if (action === 'share-with-helper' || action === 'trusted-helper-review') {
@@ -553,8 +559,8 @@ function confirmFlow() {
 }
 
 function finishFlow() {
-  modeStates.simple.activeTab = 'home';
-  modeStates.simple.scrollPositions.home = 0;
+  modeStates.simple.activeTab = 'account';
+  modeStates.simple.scrollPositions.account = 0;
   modeStates.simple.flowStack = [];
   renderMode();
 }
