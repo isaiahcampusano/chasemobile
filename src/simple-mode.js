@@ -2,9 +2,11 @@ import { icon } from './icons.js';
 import { formatCurrency } from './data.js';
 
 export const simpleNavItems = [
-  { id: 'home', label: 'Home', icon: 'home' },
-  { id: 'pay', label: 'Pay & transfer', icon: 'transfer' },
-  { id: 'settings', label: 'Settings', icon: 'gear' }
+  { id: 'pay', label: 'Pay', icon: 'transfer' },
+  { id: 'account', label: 'Account', icon: 'wallet' },
+  { id: 'assistant', label: 'Assistant', icon: 'chat' },
+  { id: 'track', label: 'Track', icon: 'chart' },
+  { id: 'more', label: 'More', icon: 'dots' }
 ];
 
 function statusBar() {
@@ -14,88 +16,141 @@ function statusBar() {
   </div>`;
 }
 
-function simpleHeader(title, subtitle = '') {
+function simpleHeader() {
   return `<header class="simple-header sticky-header">
     ${statusBar()}
-    <div class="simple-title-row">
-      <div class="simple-brand-lockup"><span class="chase-mark" aria-hidden="true"></span><b>CHASE</b></div>
-      <div class="simple-title-copy">${subtitle ? `<span>${subtitle}</span>` : ''}<h1>${title}</h1></div>
-      <button class="simple-avatar" type="button" data-action="view-profile" aria-label="Open profile">${icon('user')}</button>
+    <div class="simple-global-row">
+      <button class="simple-header-button" type="button" data-action="view-more" aria-label="Open menu">${icon('menu')}</button>
+      <span class="simple-chase-logo" role="img" aria-label="Chase"><span class="chase-mark" aria-hidden="true"></span></span>
+      <button class="simple-avatar" type="button" data-action="view-more" aria-label="Open profile">${icon('user')}</button>
     </div>
   </header>`;
 }
 
-function modeBanner() {
-  return `<section class="simple-mode-banner" aria-label="Simple Mode">
-    <span>${icon('shield')}</span>
-    <div><strong>Simple mode</strong><p>Payments use bigger buttons, clearer labels, and an extra review before money moves.</p></div>
-  </section>`;
+function pageHeading(eyebrow, title, description = '') {
+  return `<div class="simple-page-heading">
+    ${eyebrow ? `<p class="simple-page-eyebrow">${eyebrow}</p>` : ''}
+    <h1>${title}</h1>
+    ${description ? `<p>${description}</p>` : ''}
+  </div>`;
 }
 
-function homeScreen(data) {
+function transactionRows(data, limit = data.transactions.length) {
+  return data.transactions.slice(0, limit).map((transaction) => `<button class="transaction-row" type="button" data-transaction-id="${transaction.id}">
+    <span class="transaction-mark">${transaction.merchant.slice(0, 1)}</span>
+    <span><strong>${transaction.merchant}</strong><small>${transaction.date}</small></span>
+    <b class="${transaction.amount > 0 ? 'positive' : ''}">${formatCurrency(transaction.amount)}</b>
+    ${icon('chevron')}
+  </button>`).join('');
+}
+
+function accountScreen(data) {
   const total = data.accounts.reduce((sum, account) => sum + account.balance, 0);
-  const upcomingBills = `${data.bills.length} due by ${data.bills[data.bills.length - 1]?.due}`;
-  return `<section class="screen simple-screen simple-home" data-screen="home" aria-label="Accounts">
-    ${simpleHeader('Accounts')}
+  const frequentRecipient = data.recipients[0];
+  const nextBill = data.bills[0];
+
+  return `<section class="screen simple-screen simple-account" data-screen="account" aria-label="Account">
+    ${simpleHeader()}
     <div class="screen-scroll" tabindex="0">
-      <div class="simple-content simple-home-content">
-        <section class="simple-overview-card" aria-labelledby="simple-home-balance">
+      <div class="simple-content simple-account-content">
+        ${pageHeading('Simple Mode', 'Account', 'Your balances and the actions you use most.')}
+
+        <section class="simple-overview-card" aria-labelledby="simple-account-balance">
           <div class="simple-balance-hero">
-            <h2 id="simple-home-balance">${formatCurrency(total)}</h2>
-            <p>Available balance across all accounts</p>
+            <span>Available balance</span>
+            <h2 id="simple-account-balance">${formatCurrency(total)}</h2>
+            <p>Across ${data.accounts.length} accounts</p>
           </div>
 
           <div class="simple-account-list" aria-label="Bank accounts">
             ${data.accounts.map((account) => `<article class="simple-account-row">
               <span class="simple-account-icon">${icon(account.id === 'checking' ? 'wallet' : 'pig')}</span>
-              <span><strong>${account.name}</strong><small>Account ending in ${account.lastFour}</small></span>
+              <span><strong>${account.name}</strong><small>Ending in ${account.lastFour}</small></span>
               <b>${formatCurrency(account.balance)}</b>
             </article>`).join('')}
           </div>
         </section>
 
-        <div class="simple-quick-actions" aria-label="Quick actions">
-          <button class="simple-quick-pill" type="button" data-flow="send"><span class="simple-pill-icon">${icon('cash')}</span><span>Send money</span></button>
-          <button class="simple-quick-pill" type="button" data-flow="bill"><span class="simple-pill-icon">${icon('receipt')}</span><span>Pay a bill</span></button>
-          <button class="simple-quick-pill" type="button" data-flow="transfer"><span class="simple-pill-icon">${icon('transfer')}</span><span>Transfer</span></button>
-        </div>
-
-        <section class="simple-safety-grid" aria-label="Helpful reminders">
-          <article><strong>Upcoming bills</strong><span>${upcomingBills}</span></article>
-        </section>
-
-        <section class="simple-section recent-section" aria-labelledby="recent-title">
-          <div class="simple-section-heading"><h2 id="recent-title">Recent activity</h2><button type="button" data-action="view-all-transactions" aria-label="View all recent activity">See all</button></div>
-          <div class="transaction-list">
-            ${data.transactions.slice(0, 4).map((transaction) => `<button class="transaction-row" type="button" data-transaction-id="${transaction.id}">
-              <span class="transaction-mark">${transaction.merchant.slice(0, 1)}</span>
-              <span><strong>${transaction.merchant}</strong><small>${transaction.date}</small></span>
-              <b class="${transaction.amount > 0 ? 'positive' : ''}">${formatCurrency(transaction.amount)}</b>
+        <section class="simple-section simple-shortcuts-section" aria-labelledby="shortcut-title">
+          <div class="simple-section-heading"><h2 id="shortcut-title">Shortcuts</h2><span class="simple-section-note">Based on your activity</span></div>
+          <div class="simple-shortcuts">
+            <button class="simple-shortcut" type="button" data-flow="send" data-recipient="${frequentRecipient.id}">
+              <span class="simple-shortcut-icon">${icon('cash')}</span>
+              <span><strong>Send to ${frequentRecipient.name}</strong><small>Last sent ${frequentRecipient.lastSent}</small></span>
               ${icon('chevron')}
-            </button>`).join('')}
+            </button>
+            <button class="simple-shortcut" type="button" data-flow="bill" data-bill="${nextBill.id}">
+              <span class="simple-shortcut-icon">${icon('receipt')}</span>
+              <span><strong>Pay ${nextBill.payee}</strong><small>Due ${nextBill.due} &middot; ${formatCurrency(nextBill.amount)}</small></span>
+              ${icon('chevron')}
+            </button>
           </div>
         </section>
 
-        <section class="simple-section simple-help-panel" aria-labelledby="help-title">
-          <span>${icon('chat')}</span>
-          <div><h2 id="help-title">Questions about a charge?</h2><p>Get a plain-language explanation or share it with a trusted helper before you act.</p></div>
-          <button type="button" data-action="get-help" aria-label="Open help for a recent charge">Get help</button>
+        <section class="simple-section latest-activity-section" aria-labelledby="latest-activity-title">
+          <div class="simple-section-heading"><h2 id="latest-activity-title">Latest activity</h2><button type="button" data-action="view-all-transactions" aria-label="View all activity">See all</button></div>
+          <div class="transaction-list">${transactionRows(data, 1)}</div>
         </section>
       </div>
     </div>
   </section>`;
 }
 
-function payScreen(data) {
-  return `<section class="screen simple-screen simple-pay" data-screen="pay" aria-label="Pay and transfer">
-    ${simpleHeader('Pay & transfer')}
+function payScreen() {
+  return `<section class="screen simple-screen simple-pay" data-screen="pay" aria-label="Pay">
+    ${simpleHeader()}
     <div class="screen-scroll" tabindex="0">
       <div class="simple-content">
+        ${pageHeading('Money movement', 'Pay', 'Choose one task. We will show the details before anything moves.')}
         <div class="simple-task-stack">
-          <button type="button" data-flow="send">${icon('cash')}<span><strong>Send money</strong></span>${icon('chevron')}</button>
-          <button type="button" data-flow="bill">${icon('receipt')}<span><strong>Pay a bill</strong></span>${icon('chevron')}</button>
-          <button type="button" data-flow="transfer">${icon('transfer')}<span><strong>Transfer</strong></span>${icon('chevron')}</button>
+          <button type="button" data-flow="send">${icon('cash')}<span><strong>Send money</strong><small>Send money to someone you know</small></span>${icon('chevron')}</button>
+          <button type="button" data-flow="bill">${icon('receipt')}<span><strong>Pay a bill</strong><small>Choose a bill and review the amount</small></span>${icon('chevron')}</button>
+          <button type="button" data-flow="transfer">${icon('transfer')}<span><strong>Transfer</strong><small>Move money between your accounts</small></span>${icon('chevron')}</button>
         </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function assistantScreen(data) {
+  const latestCharge = data.transactions.find((transaction) => transaction.amount < 0);
+  return `<section class="screen simple-screen simple-assistant" data-screen="assistant" aria-label="Assistant">
+    ${simpleHeader()}
+    <div class="screen-scroll" tabindex="0">
+      <div class="simple-content">
+        ${pageHeading('Support', 'Assistant', 'Get a plain-language explanation before you act.')}
+        <article class="assistant-callout">
+          <span>${icon('chat')}</span>
+          <div><strong>Need help with a charge?</strong><p>${latestCharge ? `${latestCharge.merchant} is your latest charge for ${formatCurrency(Math.abs(latestCharge.amount))}.` : 'Review a recent charge with a little more context.'}</p></div>
+        </article>
+        <div class="simple-settings-list detail-action-list">
+          <button type="button" data-action="get-help" aria-label="Explain a recent charge">${icon('receipt')}<span>Explain a recent charge</span>${icon('chevron')}</button>
+          <button type="button" data-action="share-with-helper" aria-label="Share with trusted helper">${icon('user')}<span>Share with trusted helper</span>${icon('chevron')}</button>
+          <button type="button" data-action="contact-support" aria-label="Contact Chase support">${icon('chat')}<span>Contact Chase support</span>${icon('chevron')}</button>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function trackScreen(data) {
+  const upcomingBills = `${data.bills.length} bills due by ${data.bills[data.bills.length - 1]?.due}`;
+  return `<section class="screen simple-screen simple-track" data-screen="track" aria-label="Track">
+    ${simpleHeader()}
+    <div class="screen-scroll" tabindex="0">
+      <div class="simple-content">
+        ${pageHeading('Account overview', 'Track', 'See what has happened and what is coming up.')}
+        <section class="simple-safety-grid" aria-label="Upcoming bills">
+          <article>
+            <span class="simple-safety-icon">${icon('receipt')}</span>
+            <div><strong>Upcoming bills</strong><span>${upcomingBills}</span></div>
+            <button type="button" data-action="open-pay-tab">Pay a bill</button>
+          </article>
+        </section>
+        <section class="simple-section track-activity-section" aria-labelledby="track-activity-title">
+          <div class="simple-section-heading"><h2 id="track-activity-title">Recent activity</h2><span class="simple-section-note">${data.transactions.length} items</span></div>
+          <div class="transaction-list">${transactionRows(data)}</div>
+        </section>
       </div>
     </div>
   </section>`;
@@ -134,29 +189,43 @@ const settingsSections = [
   }
 ];
 
-function settingsScreen() {
-  return `<section class="screen simple-screen simple-settings" data-screen="settings" aria-label="Settings">
-    ${simpleHeader('Settings')}
+function aboutSimpleMode() {
+  return `<article class="simple-about-panel">
+    <span class="simple-about-icon">${icon('shield')}</span>
+    <div>
+      <p class="detail-kicker">About this feature</p>
+      <h2>Simple Mode</h2>
+      <p>Fewer choices, clearer details, and one extra review before money moves.</p>
+    </div>
+    <ul>
+      <li>Large buttons and plain-language labels</li>
+      <li>Essential account details stay easy to find</li>
+      <li>A trusted helper can review an unusual payment</li>
+    </ul>
+  </article>`;
+}
+
+function moreScreen(data) {
+  const total = data.accounts.reduce((sum, account) => sum + account.balance, 0);
+  return `<section class="screen simple-screen simple-more" data-screen="more" aria-label="More">
+    ${simpleHeader()}
     <div class="screen-scroll" tabindex="0">
       <div class="simple-content">
-        <div class="settings-profile"><span class="simple-avatar large">${icon('user')}</span><span><strong>Demo customer</strong><small>Fictional profile</small></span></div>
-        <div class="simple-controls-card">
-          <div><strong>Large text and buttons</strong><span>On</span></div>
-          <div><strong>Plain-language reviews</strong><span>On</span></div>
-          <div><strong>Trusted helper alerts</strong><span>On</span></div>
-        </div>
+        ${pageHeading('Account menu', 'More', 'Preferences and lower-frequency account tools.')}
+        <div class="settings-profile"><span class="simple-avatar large">${icon('user')}</span><span><strong>Demo customer</strong><small>Available balance ${formatCurrency(total)}</small></span></div>
+        ${aboutSimpleMode()}
         <div class="simple-settings-list">
           ${settingsSections.map(({ icon: iconName, label }, index) => `<button type="button" data-settings-section="${index}" aria-label="Open ${label}">${icon(iconName)}<span>${label}</span>${icon('chevron')}</button>`).join('')}
           <button class="sign-out-row" type="button" data-action="sign-out" aria-label="Sign out">${icon('logout')}<span>Sign out</span>${icon('chevron')}</button>
         </div>
-        <p class="settings-note">Prototype only. Simple Mode settings show how Chase could support seniors, kids, and caregivers without changing the underlying account.</p>
+        <p class="settings-note">Prototype only. Simple Mode shows how Chase could support seniors, kids, and caregivers without changing the underlying account.</p>
       </div>
     </div>
   </section>`;
 }
 
 export function simpleScreens(data) {
-  return `${homeScreen(data)}${payScreen(data)}${settingsScreen()}`;
+  return `${payScreen()}${accountScreen(data)}${assistantScreen(data)}${trackScreen(data)}${moreScreen(data)}`;
 }
 
 function flowHeader(title, stepLabel = '') {
@@ -217,7 +286,7 @@ function flowReview(route, data) {
 
 function flowComplete(route) {
   const labels = { send: 'Send money', bill: 'Bill payment', transfer: 'Transfer' };
-  return `<div class="flow-complete"><span class="complete-mark">${icon('check')}</span><p>Demo complete</p><h2>${labels[route.type]} reviewed</h2><p>No money moved and no banking activity was created.</p><button class="simple-continue" type="button" data-flow-done>Return home</button></div>`;
+  return `<div class="flow-complete"><span class="complete-mark">${icon('check')}</span><p>Demo complete</p><h2>${labels[route.type]} reviewed</h2><p>No money moved and no banking activity was created.</p><button class="simple-continue" type="button" data-flow-done>Return to Account</button></div>`;
 }
 
 function transactionDetail(route, data) {
@@ -225,24 +294,6 @@ function transactionDetail(route, data) {
   const account = data.accounts.find((item) => item.id === transaction?.accountId);
   if (!transaction) return '<p class="empty-state">Transaction not found.</p>';
   return `<div class="transaction-detail"><span class="transaction-mark large">${transaction.merchant.slice(0, 1)}</span><h2>${transaction.merchant}</h2><strong class="detail-amount ${transaction.amount > 0 ? 'positive' : ''}">${formatCurrency(transaction.amount)}</strong><dl><div><dt>Date</dt><dd>${transaction.date}</dd></div><div><dt>Account</dt><dd>${account?.name} &middot; ${account?.lastFour}</dd></div><div><dt>Status</dt><dd>Completed</dd></div></dl><button class="simple-secondary" type="button" data-flow-back>Go back</button></div>`;
-}
-
-function activityScreen(data) {
-  return `<div class="detail-stack">
-    <article class="detail-hero">
-      <p class="detail-kicker">All activity</p>
-      <h2>Recent transactions</h2>
-      <p>Review recent account activity in one place before you decide what to do next.</p>
-    </article>
-    <div class="transaction-list">
-      ${data.transactions.map((transaction) => `<button class="transaction-row" type="button" data-transaction-id="${transaction.id}">
-        <span class="transaction-mark">${transaction.merchant.slice(0, 1)}</span>
-        <span><strong>${transaction.merchant}</strong><small>${transaction.date}</small></span>
-        <b class="${transaction.amount > 0 ? 'positive' : ''}">${formatCurrency(transaction.amount)}</b>
-        ${icon('chevron')}
-      </button>`).join('')}
-    </div>
-  </div>`;
 }
 
 function helpScreen(data) {
@@ -261,27 +312,6 @@ function helpScreen(data) {
       <button type="button" data-action="view-all-transactions" aria-label="Review recent activity">${icon('receipt')}<span>Review recent activity</span>${icon('chevron')}</button>
       <button type="button" data-action="share-with-helper" aria-label="Share with trusted helper">${icon('user')}<span>Share with trusted helper</span>${icon('chevron')}</button>
       <button type="button" data-action="contact-support" aria-label="Contact Chase support">${icon('chat')}<span>Contact Chase support</span>${icon('chevron')}</button>
-    </div>
-  </div>`;
-}
-
-function profileScreen(data) {
-  const total = data.accounts.reduce((sum, account) => sum + account.balance, 0);
-  return `<div class="detail-stack">
-    <article class="detail-hero">
-      <p class="detail-kicker">Profile</p>
-      <h2>Demo customer</h2>
-      <p>Review the account snapshot, Simple Mode status, and the fastest way to change preferences.</p>
-    </article>
-    <div class="settings-profile"><span class="simple-avatar large">${icon('user')}</span><span><strong>Demo customer</strong><small>Available balance ${formatCurrency(total)}</small></span></div>
-    <div class="simple-controls-card">
-      <div><strong>Preferred experience</strong><span>Simple Mode</span></div>
-      <div><strong>Trusted helper</strong><span>Connected</span></div>
-      <div><strong>Recent activity</strong><span>${data.transactions.length} items</span></div>
-    </div>
-    <div class="simple-settings-list detail-action-list">
-      <button type="button" data-action="open-settings-tab" aria-label="Open settings">${icon('gear')}<span>Open settings</span>${icon('chevron')}</button>
-      <button type="button" data-action="view-all-transactions" aria-label="Open recent activity">${icon('receipt')}<span>Open recent activity</span>${icon('chevron')}</button>
     </div>
   </div>`;
 }
@@ -306,44 +336,34 @@ export function simpleFlowScreen(route, data) {
     bill: 'Pay a bill',
     transfer: 'Transfer',
     transaction: 'Transaction details',
-    activity: 'Recent activity',
-    help: 'Get help',
-    profile: 'Profile',
+    help: 'Assistant',
     settings: settingsSections[route.sectionIndex]?.label || 'Settings'
   };
   const content = route.type === 'transaction'
     ? transactionDetail(route, data)
-    : route.type === 'activity'
-      ? activityScreen(data)
-      : route.type === 'help'
-        ? helpScreen(data)
-        : route.type === 'profile'
-          ? profileScreen(data)
-          : route.type === 'settings'
-            ? settingsDetailScreen(route)
-            : route.step === 'review'
-              ? flowReview(route, data)
-              : route.step === 'complete'
-                ? flowComplete(route)
-                : route.type === 'send'
-                  ? sendForm(data, route.presetId, route.payload)
-                  : route.type === 'bill'
-                    ? billForm(data, route.presetId, route.payload)
-                    : transferForm(data, route.payload);
+    : route.type === 'help'
+      ? helpScreen(data)
+      : route.type === 'settings'
+        ? settingsDetailScreen(route)
+        : route.step === 'review'
+          ? flowReview(route, data)
+          : route.step === 'complete'
+            ? flowComplete(route)
+            : route.type === 'send'
+              ? sendForm(data, route.presetId, route.payload)
+              : route.type === 'bill'
+                ? billForm(data, route.presetId, route.payload)
+                : transferForm(data, route.payload);
   const stepLabel = route.type === 'transaction'
-    ? 'Recent activity'
-    : route.type === 'activity'
-      ? 'Account history'
-      : route.type === 'help'
-        ? 'Support'
-        : route.type === 'profile'
-          ? 'Account overview'
-          : route.type === 'settings'
-            ? 'Settings'
-            : route.step === 'review'
-              ? 'Step 2 of 2'
-              : route.step === 'complete'
-                ? 'Finished'
-                : 'Step 1 of 2';
+    ? 'Track'
+    : route.type === 'help'
+      ? 'Assistant'
+      : route.type === 'settings'
+        ? 'More'
+        : route.step === 'review'
+          ? 'Step 2 of 2'
+          : route.step === 'complete'
+            ? 'Finished'
+            : 'Step 1 of 2';
   return `<section class="flow-screen" data-flow-screen="${route.type}">${flowHeader(titles[route.type], stepLabel)}<div class="flow-scroll" tabindex="0">${content}</div></section>`;
 }
